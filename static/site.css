@@ -1,0 +1,113 @@
+/*
+Assurance Wireless Colors
+#00AEEF - blue
+#2DAEFF - light blue
+#02A2D8 - logo blue
+#800F69 - purple
+#D62025 - Virgin Moblie red
+*/
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+/* landing page */
+.landing-area {
+    height: 100vh;
+    position: relative;
+}
+.landing-content {
+    margin: 0;    
+    position: absolute;
+    top: 45%;
+    left: 40%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+/* bot window */
+#bot {
+    height: 0;
+    border: none;
+    width: 400px;
+    position: fixed;
+    bottom: 0;
+}
+#bot-block {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    background: #337ab7;
+    color: #fff;
+    padding: 1rem;
+    border-top-right-radius: 10px;
+}
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Login & Signup */
+.btn-box {
+    margin-top: 1rem;
+}
+    .btn-box a {
+        margin-left: 1rem;
+    }
+
+.cstm-btn {
+    border: solid 1.5px;
+    color: #fff!important;
+}
+
+#login-modal {
+    display: none;
+}
+
+#form-modal {
+    padding-top: 2rem;
+}
+
+.modal-content {
+    background: #f1f1f1;
+}
+
+.modal-header {
+    border: none;
+}
+
+.modal-footer {
+    border: none;
+}
+
+    .modal-footer button {
+        color: #D62025;
+        text-shadow: none;
+        font-size: 20pt;
+    }
+
+/*Bootstrap Modal*/
+.login-modal {
+    padding-top: 0.7rem;
+}
+
+    .login-modal input {
+        margin-top: 1rem;
+        padding: .5rem;
+        border-radius: .45rem;
+    }
+
+    .login-modal p {
+        padding-top: 0.7rem;
+        padding-bottom: 0;
+    }
+
+    .login-modal a {
+        margin-bottom: 1rem;
+    }
