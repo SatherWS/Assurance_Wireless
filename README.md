@@ -5,7 +5,7 @@ This repository contains a hypothetical web application for Assurance Wireless T
 * Python version 3.0 or greater 
 * Pip version 3.0 or greater
 * Flask Web Framework
-* Microsoft Bot Framework (see below link)
+* Microsoft Bot Framework (see below link) <br/>
 https://docs.microsoft.com/en-us/azure/bot-service/python/bot-builder-python-quickstart?view=azure-bot-service-4.0
 
 ## Set Up
