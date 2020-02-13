@@ -1,4 +1,5 @@
-# Lifeline Application Management Software for Assurance Wireless 
+# Lifeline Application Management Educational 
+## A Hypothetical Web App for Assurance Wireless 
 Capstone project for software engineering class
 
 ## Dependencies and Prerequisites
@@ -13,8 +14,10 @@ https://azure.microsoft.com/en-us/
 2. Install flask using command `pip install flask`
 3. Configure database in mysql shell with command `source C:/path/to/Assurance_Wireless/DbConfig.sql`
 4. Change lines 11 and 12 of app.py to...
+```
 app.config['MYSQL_USER'] = '<your username>'
 app.config['MYSQL_PASSWORD'] = '<your password'
+```
 
 Bot Configuration
 
