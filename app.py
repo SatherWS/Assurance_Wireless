@@ -16,7 +16,7 @@ app.config['MYSQL_DB'] = 'awla_db'
 mysql = MySQL(app)
 #sess = session()
 
-# TODO: seperate view renders from database functions rename to login
+# TODO: Separate view renders from database functions
 @app.route("/",methods=['GET', 'POST'])
 def home():
     msg = []
@@ -59,7 +59,6 @@ def accounts():
 def applications():
     return render_template("admin_templates/applications.html")
 
-# 
 if __name__ == "__main__":
     app.secret_key = 'super secret key'
     app.config['SESSION_TYPE'] = 'filesystem'
