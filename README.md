@@ -1,5 +1,5 @@
 # Lifeline Application Management Educational 
-This repository contains a hypothetical web application for Assurance Wireless This project's goal is to improve Assurance Wireless's Lifeline application process. 
+This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. 
 
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
