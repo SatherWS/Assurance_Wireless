@@ -1,5 +1,5 @@
 # Lifeline Application Management Educational 
-## A Hypothetical Web App for Assurance Wireless 
+### A Hypothetical Web App for Assurance Wireless 
 Capstone project for software engineering class
 
 ## Dependencies and Prerequisites
