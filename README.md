@@ -1,4 +1,4 @@
-# Lifeline Application Management Educational 
+# Lifeline Application Management System 
 This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. 
 
 ## Dependencies and Prerequisites
