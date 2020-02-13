@@ -12,7 +12,7 @@ https://azure.microsoft.com/en-us/
 Install flask using pip
 pip install flask
 
-### Database Set Up
+`Database Set Up`
 mysql -u <username> -p
 source /path/to/DbConfig.sql
 
