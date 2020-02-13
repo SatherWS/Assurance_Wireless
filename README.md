@@ -5,7 +5,7 @@ Capstone project for software engineering class
 * Python version 3.0 or greater 
 * Flask Web Framework
 * Pip version 3.0 or greater
-Microsoft Azure account (free for one year)
+* Microsoft Azure account (free for one year)
 https://azure.microsoft.com/en-us/
 
 ## Project Set Up
