@@ -21,6 +21,11 @@ insert into users(fname, lname, email, password) values
 	('Colin', 'Sather', 'satherc@go.stockton.edu', 'asdf'),
 	('Another', 'User', 'idk@asdf.com', 'asdf'),
 	('Test', 'Data', 'asdf@asdf.com', 'asdf');
+	
+-- Insert admin user
+insert into users(fname, lname, email, password, admin) values 
+('admin', 'user', 'admin@admin.com','asdf','y');
+
 
 create table if not exists applications (
 	appid int primary key not null auto_increment,

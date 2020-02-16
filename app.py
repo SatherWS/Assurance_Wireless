@@ -66,8 +66,6 @@ def logout():
 def home():
     return render_template("home.html")
 
-
-# View renders
 @app.route("/about/")
 def about():
     return render_template("about.html")
