@@ -28,11 +28,13 @@ def register():
         cur = mysql.connection.cursor()
         cur.execute("INSERT INTO users (fname, lname, email, password) VALUES (%s,%s,%s,%s)",
         (fname, lname, email, password))
+        cur.execute("INSERT INTO applications(")
         mysql.connection.commit()
         session['fname'] = fname
         session['lname'] = lname
         session['email'] = email
         return redirect(url_for("home"))
+
 
 @app.route("/login",methods=['GET', 'POST'])
 def login():
@@ -57,9 +59,6 @@ def login():
 def logout():
     session.clear()
     return render_template("home.html")
-
-# Data display functions
-
 
 # View functions
 @app.route("/")
