@@ -19,6 +19,7 @@ app.config['MYSQL_PASSWORD'] = '<your password>'
 ```
 
 ## Running the app in development mode
+In an integrated terminal or command prompt enter the following commands in the project's directory.
 * set FLASK_APP=app.py 
 * set FLASK_DEBUG=1
 * flask run
