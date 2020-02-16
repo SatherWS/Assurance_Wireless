@@ -1,5 +1,5 @@
 # Lifeline Application Management System 
-This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. 
+This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. This project was written using Visual Studio Code IDE. Other text editors like PyCharm could work aswell.
 
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
