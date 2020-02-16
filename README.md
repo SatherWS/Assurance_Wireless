@@ -23,3 +23,9 @@ In an integrated terminal or command prompt enter the following commands in the 
 * set FLASK_APP=app.py 
 * set FLASK_DEBUG=1
 * flask run
+
+## TODO: 2/16/2020
+* Add foreign key constraint on applications table in DbConfig.sql
+* Build admin panel for accepting/denying customer applications
+* Implement 'Application Status' button
+  * create application status view
