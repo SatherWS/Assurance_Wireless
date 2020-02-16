@@ -4,10 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lifeline Assistant</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}"/>
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -23,18 +21,23 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('about') }}">Information</a></li>
-                    <li><a href="{{ url_for('contact') }}">Contact</a></li>
-                    <!-- Logged in User Option -->
-                    <li><a href="{{ url_for('review') }}">Application Status</a></li>
+                    <li><a href="{{ url_for('about') }}">About</a></li>
+                    <li><a href="{{ url_for('contact') }}">Contact</a></li>                   
                     <!-- Admin User Options -->
-                    <li><a href="{{ url_for('accounts') }}">Manage Accounts</a></li>
-                    <li><a href="{{ url_for('applications') }}">Manage Applications</a></li>
+                    {% if session['admin'] %}
+                        <li><a href="{{ url_for('accounts') }}">Manage Accounts</a></li>
+                        <li><a href="{{ url_for('applications') }}">Manage Applications</a></li>
+                    {% endif %}
                 </ul>
                 <!--Login/Signup Buttons-->
                 <div class="text-right btn-box">
-                    <a class="btn btn-primary">New Application</a>
-                    <a class="btn cstm-btn" data-toggle="modal" data-target="#loginModal">Login</a>
+                    {% if session['email'] %}
+                    <a class="btn btn-primary" href="{{ url_for('register') }}">Application Status</a>
+                    <a class="btn cstm-btn" href="/logout">Log Out</a>
+                    {% else %}
+                    <a class="btn btn-primary" href="{{ url_for('register') }}">New Application</a>
+                    <a class="btn cstm-btn" data-toggle="modal" data-target="#loginModal">Log In</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -51,23 +54,24 @@
             <div class="modal-content">
                 <div class="modal-header row"></div>
                 <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                        <div class="login-modal">
-                            <h3>Welcome Back</h3>
-                            <!-- Login Form -->
-                            <form action="/" method="post">
-                                <input id="email_field" name="username" type="text" placeholder="Enter Email" class="form-control" />
-                                <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" />
-                                <p>Don't have an account? Sign up <a href="#">here</a></p>
-                                <input type="submit" value="Sign In" class="btn btn-success" />
-                                {% if msg %}
-                                    <p>{{ msg }}</p>
-                                {% endif %}
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-md-3"></div>
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+            
+                <!-- Login Form -->
+                <div class="login-modal">
+                    <h3>Welcome Back</h3>
+                    <form action="/login" method="post">
+                        <input id="email_field" name="username" type="text" placeholder="Enter Email" class="form-control"/>
+                        <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" />
+                        <p>Don't have an account? Sign up <a href="#">here</a></p>
+                        <input type="submit" value="Sign In" class="btn btn-success" />
+                        {% if msg %}
+                            <p>{{ msg }}</p>
+                        {% endif %}
+                    </form>
+                </div>
+                </div>
+                <div class="col-md-3"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -94,8 +98,6 @@
         </footer>
     </div>
 
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
             crossorigin="anonymous"
             integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">

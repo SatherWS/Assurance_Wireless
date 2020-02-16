@@ -1,44 +1,73 @@
 # App Launching Point
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL
+from flask_mysqldb import MySQL, MySQLdb
+from flask_login import LoginManager #not in use
+#from flask_session import Session
 import re
 
 
 app = Flask(__name__)
-app.run(debug = True) # allows code changes on refresh
-
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_PASSWORD'] = 'mysql'
 app.config['MYSQL_DB'] = 'awla_db'
-
-# init mysql
+app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
+app.secret_key = "aknfn348h23h5rwainfoanfw4"
 mysql = MySQL(app)
-#sess = session()
 
-# TODO: seperate view renders from database functions rename to login
-@app.route("/",methods=['GET', 'POST'])
-def home():
-    msg = []
+# User authentication and creation functions
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template('register.html')
+    else:
+        fname = request.form['first']
+        lname = request.form['last']
+        email = request.form['email']
+        password = request.form['password']
+        cur = mysql.connection.cursor()
+        cur.execute("INSERT INTO users (fname, lname, email, password) VALUES (%s,%s,%s,%s)",
+        (fname, lname, email, password))
+        mysql.connection.commit()
+        session['fname'] = fname
+        session['lname'] = lname
+        session['email'] = email
+        return redirect(url_for("home"))
+
+@app.route("/login",methods=['GET', 'POST'])
+def login():
     if request.method == "POST":
-        fields = request.form
-        uname = fields['username']
-        password = fields['password']
+        uname = request.form['username']
+        password = request.form['password']
         cur = mysql.connection.cursor()
         cur.execute("SELECT * FROM USERS WHERE EMAIL=%s AND PASSWORD=%s", (uname, password))
-        mysql.connection.commit()
-        ret = cur.fetchone()
+        user = cur.fetchone()
         cur.close()
 
-        if ret:
-            session['loggedin'] = True
-            session['id'] = ret['userid']
-            session['username'] = ret['email']
-            msg.append("Login Successs")
+        if len(user) > 0:
+            session['email'] = user['email']
+            if user['admin'] == 'y': session['admin'] = user['admin']
+            return render_template("home.html")
         else:
-            msg.append("Login Failure")
-    return render_template("home.html", msg=msg)
+            return "Invalid email and password"
+    else:
+        return render_template("home.html")
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return render_template("home.html")
+
+# Data display functions
+
+
+# View functions
+@app.route("/")
+def home():
+    return render_template("home.html")
+
+
+# View renders
 @app.route("/about/")
 def about():
     return render_template("about.html")
@@ -59,12 +88,6 @@ def accounts():
 def applications():
     return render_template("admin_templates/applications.html")
 
-# 
+
 if __name__ == "__main__":
-    app.secret_key = 'super secret key'
-    app.config['SESSION_TYPE'] = 'filesystem'
-
-    #sess.init_app(app)
-
-    app.debug = True
-    app.run()
+    app.run(debug=True)
