@@ -1,8 +1,6 @@
 # App Launching Point
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL, MySQLdb
-from flask_login import LoginManager #not in use
-#from flask_session import Session
 import re
 
 
@@ -15,25 +13,46 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.secret_key = "aknfn348h23h5rwainfoanfw4"
 mysql = MySQL(app)
 
-# User authentication and creation functions
+# Adds new entries to awla_db.user and awla.applications
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
         return render_template('register.html')
     else:
+        # insert data into users table
         fname = request.form['first']
         lname = request.form['last']
         email = request.form['email']
         password = request.form['password']
         cur = mysql.connection.cursor()
-        cur.execute("INSERT INTO users (fname, lname, email, password) VALUES (%s,%s,%s,%s)",
-        (fname, lname, email, password))
-        cur.execute("INSERT INTO applications(")
+        
+        # send statement 1
+        sql = "INSERT INTO users (fname, lname, email, password) VALUES (%s,%s,%s,%s)"
+        values = (fname, lname, email, password)
+        cur.execute(sql, values)
         mysql.connection.commit()
         session['fname'] = fname
         session['lname'] = lname
         session['email'] = email
+
+        # insert data into applications table
+        language = request.form.get('language')
+        zip_code = request.form['zipcode']
+        street = request.form['street']
+        city = request.form['city']
+        state = request.form.get('state') 
+        dob = request.form['dob']
+        ssn = request.form['ssn']
+        cell = request.form['phone']
+
+        # send statement 2
+        sql = "INSERT INTO applications(fname,lname,language,zipcode,street,city,state,ssn,dob) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (fname, lname, language, zip_code, street, city, state, ssn, dob)
+        cur.execute(sql, values)
+        mysql.connection.commit()
         return redirect(url_for("home"))
+
+    return render_template("register.html")
 
 
 @app.route("/login",methods=['GET', 'POST'])
