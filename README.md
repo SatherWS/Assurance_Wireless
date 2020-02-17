@@ -25,7 +25,8 @@ In an integrated terminal or command prompt enter the following commands in the 
 * flask run
 
 ## TODO: 2/16/2020
-* Add foreign key constraint on applications table in DbConfig.sql
+* Change directory structure to support packaging, shown in the link below <br/>
+https://flask.palletsprojects.com/en/1.1.x/patterns/packages/
 * Build admin panel for accepting/denying customer applications
 * Implement 'Application Status' button
   * create application status view
