@@ -13,6 +13,8 @@ create table if not exists users (
 	lname varchar(50),
 	email varchar(75) unique not null,
 	password varchar(25) not null,
+	ssn char(9) unique not null,
+	dob date not null,
 	admin char(1) default 'n' not null,
 	created datetime default current_timestamp
 );
@@ -31,6 +33,7 @@ insert into users(fname, lname, email, password, admin) values
 create table if not exists applications (
 	appid int primary key not null auto_increment,
 	applicant_email varchar(75) unique not null,
+	status varchar(25) default 'Under Review' not null,
 	fname varchar(50),
 	lname varchar(50),
 	language varchar(25) not null,
@@ -38,8 +41,7 @@ create table if not exists applications (
 	street varchar(100) not null,
 	city varchar(30) not null,
 	state varchar(30) not null,
-	ssn varchar(20) unique not null,
-	dob date not null,
+	created datetime default current_timestamp,
 	foreign key(applicant_email) references users(email)
 );
 

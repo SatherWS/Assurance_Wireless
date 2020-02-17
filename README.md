@@ -9,7 +9,7 @@ This repository contains a hypothetical web application for Assurance Wireless. 
 https://docs.microsoft.com/en-us/azure/bot-service/python/bot-builder-python-quickstart?view=azure-bot-service-4.0
 
 ## Set Up
-1. Clone or dowload this repository
+1. Clone or download this repository
 2. Install flask using command `pip install flask`
 3. Configure database in mysql shell with command `source C:/path/to/Assurance_Wireless/DbConfig.sql`
 4. Replace lines 11 and 12 of app.py with your own mysql credentials
@@ -20,7 +20,7 @@ app.config['MYSQL_PASSWORD'] = '<your password>'
 
 ## Running the app in development mode
 In an integrated terminal or command prompt enter the following commands in the project's directory.
-* set FLASK_APP=app.py 
+* set FLASK_APP=LifelineAssistant 
 * set FLASK_DEBUG=1
 * flask run
 

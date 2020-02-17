@@ -2,7 +2,40 @@
 {% block title %}
 {% endblock %}
 {% block content %}
-<div class="container">
-    <h1>Application Status</h1>
+<div class="container status-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <!--<h2>Application Status<span class="badge badge-secondary">{{rs[3]}}</span></h2>-->
+                    <h2>Application Status: {{rs[3]}}</h2>
+                    <ul>
+                        <li>
+                            <h4>Applicant: {{rs[0]}} {{rs[1]}}</h4>
+                        </li>
+                        <li>
+                            <h4>Applied On: {{rs[2]}}</h4>
+                        </li>
+                    </ul>
+               
+                    <p>Your results will be emailed to you at <a>{{session['email']}}</a></p>
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h3>Residence Information</h3>
+                    <p>{{rs[5]}}, {{rs[6]}}, {{rs[7]}}, {{rs[4]}}</p>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4><a>View Full Application</a></h4>
+                </div>
+            </div>      
+        </div>
+    </div>
 </div>
 {% endblock %}

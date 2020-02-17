@@ -18,7 +18,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="{{ url_for('home') }}">
-                    <img src="{{ url_for('static', filename='imgs/LA-logo.png') }}" width="200px">
+                    <img src="{{ url_for('static', filename='imgs/LA-logo-sm.png') }}" width="100px">
                 </a>
             </div>
             <div class="navbar-collapse collapse">
@@ -34,7 +34,7 @@
                 <!--Login/Signup Buttons-->
                 <div class="text-right btn-box">
                     {% if session['email'] %}
-                    <a class="btn btn-primary" href="/showStatus">Application Status</a>
+                    <a class="btn btn-primary" href="{{ url_for('sessionView.showStatus') }}">Application Status</a>
                     <a class="btn cstm-btn" href="/logout">Log Out</a>
                     {% else %}
                     <a class="btn btn-primary" href="{{ url_for('register') }}">Enroll Now</a>
@@ -85,7 +85,7 @@
     <!-- Virtual Assistant Window -->
     <iframe
         id="bot"
-        src="" <!-- YOUR KEY HERE --> 
+        src=""  
         style='min-width: 400px;'>
     </iframe>
     <div id="bot-block">

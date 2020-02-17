@@ -12,6 +12,15 @@ body {
     padding-bottom: 20px;
     overflow-x: hidden;
 }
+.navbar-brand {
+    padding: 0!important;
+}
+.navbar-brand img {
+    padding: 1rem!important;
+}
+.navbar-inverse {
+    background-color: #071832!important;
+}
 /* landing page */
 .landing-area {
     left: 0;
@@ -148,6 +157,19 @@ body {
 .verify-btn {
     margin-top: 3rem;
     padding-bottom: 1.2rem;
+}
+
+.cs-label {
+    background: #252525;
+    color: #fff;
+    border-radius: 10%;
+}
+.status-body {
+    margin-top:2rem;
+}
+.status-btn a {
+    padding: 1.3rem;
+    border: solid #000 2px;
 }
 /* Copywrite footer */
 footer {

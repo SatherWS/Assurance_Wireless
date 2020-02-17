@@ -4,9 +4,9 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-        <h3>Apply for Free Mobile Phone Services</h3>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2>Apply for Free Mobile Phone Services</h2>
         <p>First we will need some information so we can contact you later with the results of your application.</p>
         <form action="/register" method="post">
             <input name="zipcode" type="number" placeholder="Enter your zip code" class="form-control su">
@@ -18,16 +18,21 @@
 
                 <div class="col-md-4">
                     <select name="state" class="form-control su">
-                        <option value="AZ">AZ</option>
-                        <option value="NJ">NJ</option>
-                        <option value="NY">NY</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NY">New York</option>
                     </select>        
                 </div>    
             </div>
-            <input name="first" type="text" placeholder="First Name" class="form-control su">
-
-            <input name="last" type="text" placeholder="Last Name" class="form-control su">
-
+            <div class="row">
+                <div class="col-md-6">
+                    <input name="first" type="text" placeholder="First Name" class="form-control su">
+                </div>
+                <div class="col-md-6">
+                    <input name="last" type="text" placeholder="Last Name" class="form-control su">
+                </div>
+            </div>
+            
             <p class="su">Please enter your date of birth followed by the last four digits of your social security number.</p>
             <div class="row">
                 <div class="col-md-6">
@@ -54,7 +59,7 @@
             <button type="submit" class="btn btn-success su">Submit Application</button>
         </form>
     </div>
-    <div class="col-md-4"></div>
+    <div class="col-md-3"></div>
 </div>
 
 {% endblock %}
