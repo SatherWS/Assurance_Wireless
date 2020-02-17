@@ -135,6 +135,20 @@ body {
         margin-bottom: 1rem;
     }
 
+.verify-bg {
+    background: #071832;
+    color: #fff;
+    padding: 2.5rem;
+}
+    .verify-bg a {
+        color: #fff;
+        padding: 1.3rem;
+        border: solid #fff 2px;
+    }
+.verify-btn {
+    margin-top: 3rem;
+    padding-bottom: 1.2rem;
+}
 /* Copywrite footer */
 footer {
     text-align: center;

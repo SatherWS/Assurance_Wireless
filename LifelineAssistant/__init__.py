@@ -1,10 +1,12 @@
-# App Launching Point
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL, MySQLdb
 import re
+import LifelineAssistant.sessionViews
 
 
 app = Flask(__name__)
+#app.register_blueprint(session_views)
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'mysql'
@@ -46,15 +48,15 @@ def register():
         cell = request.form['phone']
 
         # send statement 2
-        sql = "INSERT INTO applications(fname,lname,language,zipcode,street,city,state,ssn,dob) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-        values = (fname, lname, language, zip_code, street, city, state, ssn, dob)
+        sql = "INSERT INTO applications(applicant_email, fname, lname, language, zipcode, street, city, state, ssn, dob) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (email, fname, lname, language, zip_code, street, city, state, ssn, dob)
         cur.execute(sql, values)
         mysql.connection.commit()
         return redirect(url_for("home"))
-
     return render_template("register.html")
 
 
+# User authentication function
 @app.route("/login",methods=['GET', 'POST'])
 def login():
     if request.method == "POST":
@@ -74,12 +76,13 @@ def login():
     else:
         return render_template("home.html")
 
+# Kills current user's session
 @app.route("/logout")
 def logout():
     session.clear()
     return render_template("home.html")
 
-# View functions
+# View functions for non logged in users
 @app.route("/")
 def home():
     return render_template("home.html")
@@ -92,9 +95,12 @@ def about():
 def contact():
     return render_template("contact.html")
 
+# View functions for logged in customers and employees
+"""
 @app.route("/status/")
-def review():
+def status():
     return render_template("status.html")
+"""
 
 @app.route("/admin_templates/accounts.html")
 def accounts():
@@ -104,6 +110,6 @@ def accounts():
 def applications():
     return render_template("admin_templates/applications.html")
 
-
+# Main method
 if __name__ == "__main__":
     app.run(debug=True)
