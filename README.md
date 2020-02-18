@@ -5,8 +5,6 @@ This repository contains a hypothetical web application for Assurance Wireless. 
 * Python version 3.0 or greater 
 * Pip version 3.0 or greater
 * Flask Web Framework
-* Microsoft Bot Framework (see below link) <br/>
-https://docs.microsoft.com/en-us/azure/bot-service/python/bot-builder-python-quickstart?view=azure-bot-service-4.0
 
 ## Set Up
 1. Clone or download this repository
@@ -24,7 +22,16 @@ In an integrated terminal or command prompt enter the following commands in the 
 * set FLASK_DEBUG=1
 * flask run
 
-## TODO: 2/16/2020
-* Build admin panel for accepting/denying customer applications
-* Implement 'Application Status' button
-  * create application status view
+## Problems to Solve: 
+### Web App Functions / UI Tools
+* Build admin panel for accepting/denying customer applications (In Progress)
+* Build admin tool for managing customers (Not Started)
+  * View located here `/Views/admin_templates/accounts.html`
+ 
+ ### Fraud Prevention / Data Integrity 
+ * Use Email Validation API (https://pypi.org/project/email-verifier/) to prevent users from entering non-existent email addresses - *High Importantce*
+ * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
+
+### IRC Chat & Virtual Assistant
+* Research how to integrate a chat room component to the project - *High Importance*
+* Research how to build a bot for the IRC channel. The bot will answer a few general questions - *Medium Importance*
