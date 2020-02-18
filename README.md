@@ -29,7 +29,8 @@ In an integrated terminal or command prompt enter the following commands in the 
   * View located here `/Views/admin_templates/accounts.html`
  
  ### Fraud Prevention / Data Integrity 
- * Use Email Validation API (https://pypi.org/project/email-verifier/) to prevent users from entering non-existent email addresses - *High Importantce*
+ * Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
+   * https://pypi.org/project/email-verifier/
  * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
 
 ### IRC Chat & Virtual Assistant
