@@ -1,6 +1,21 @@
 # Lifeline Application Management & Support System 
 This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. This project was written using Visual Studio Code IDE. Other text editors like PyCharm could work aswell.
 
+## Problems to Solve: 
+### Web App Functions / UI Tools
+* Build admin panel for accepting/denying customer applications (In Progress)
+* Build admin tool for managing customers (Not Started)
+  * View located here `/Views/admin_templates/accounts.html`
+ 
+### Fraud Prevention / Data Integrity 
+* Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
+  * https://pypi.org/project/email-verifier/
+* Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
+
+### IRC Chat & Virtual Assistant
+* Research how to integrate a chat room component to the project - *High Importance*
+* Research how to build a bot for the IRC channel. The bot will answer a few general questions - *Medium Importance*
+
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
 * Pip version 3.0 or greater
@@ -27,18 +42,3 @@ set FLASK_APP=LifelineAssistant
 set FLASK_DEBUG=1
 flask run
 ````
-
-## Problems to Solve: 
-### Web App Functions / UI Tools
-* Build admin panel for accepting/denying customer applications (In Progress)
-* Build admin tool for managing customers (Not Started)
-  * View located here `/Views/admin_templates/accounts.html`
- 
- ### Fraud Prevention / Data Integrity 
- * Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
-   * https://pypi.org/project/email-verifier/
- * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
-
-### IRC Chat & Virtual Assistant
-* Research how to integrate a chat room component to the project - *High Importance*
-* Research how to build a bot for the IRC channel. The bot will answer a few general questions - *Medium Importance*
