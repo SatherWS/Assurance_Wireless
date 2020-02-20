@@ -19,20 +19,14 @@ create table if not exists users (
 	created datetime default current_timestamp
 );
 
--- Adds non-admin user
-/*
-insert into users(fname, lname, email, password) values 
-	('Test', 'Data', 'customer@asdf.com', 'asdf');
-*/
-	
--- Adds admin user
-insert into users(fname, lname, email, password, admin) values 
-('admin', 'user', 'admin@admin.com','asdf','y');
-
+-- create admin user
+insert into users(fname, lname, email, password, ssn, dob, admin) values 
+('admin', 'user', 'admin@admin.com','asdf', '123412344', curdate(), 'y');
 
 create table if not exists applications (
 	appid int primary key not null auto_increment,
-	applicant_email varchar(75) unique not null,
+	applicant_email varchar(75) not null,
+	phone_number varchar(20) null,
 	status varchar(25) default 'Under Review' not null,
 	fname varchar(50),
 	lname varchar(50),

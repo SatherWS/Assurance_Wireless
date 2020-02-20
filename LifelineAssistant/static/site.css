@@ -1,3 +1,20 @@
+/* Test Landing Page - about.html */
+.img-bg2 {
+    background-image: url("imgs/align-left-bg.jpg");
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position-x: 105%;
+    background-position-y: -140%;
+}
+.hero-div {
+    display: table; 
+    height: 65vh; 
+    overflow: hidden;
+}
+.hero-elements {
+    display: table-cell; 
+    vertical-align: middle;
+}
 /*
 Assurance Wireless Colors
 #00AEEF - blue
@@ -8,7 +25,7 @@ Assurance Wireless Colors
 */
 
 body {
-    padding-top: 50px;
+    padding-top: 85px;
     padding-bottom: 20px;
     overflow-x: hidden;
 }
@@ -18,16 +35,21 @@ body {
 .navbar-brand img {
     padding: 1rem!important;
 }
-.navbar-inverse {
-    background-color: #071832!important;
+.navbar-light {
+    background-image: linear-gradient(150deg, #fff 40%, #00aeef 40%);
+    border-bottom: #800F69 solid 5px;
 }
+.lb {
+    margin-right: 10px;
+}
+
 /* landing page */
 .landing-area {
     left: 0;
     top: 0;
     -webkit-clip-path: polygon(0 0, 100% 0%, 50% 100%, 0% 100%);
     clip-path: polygon(0 0, 100% 0%, 70% 0%, 0% 100%); 
-    height: 100vh;
+    height: 90vh;
     background-image: url("imgs/landing-img.jpg");
     background-position: 20%;
     background-repeat: no-repeat;
@@ -50,6 +72,8 @@ body {
     }
     .landing-content a {
         font-size: 16pt;
+        color: #fff!important;
+        
     }
 /* bot window */
 #bot {
@@ -63,7 +87,7 @@ body {
     display: block;
     position: fixed;
     bottom: 0;
-    background: #337ab7;
+    background: #00aeef;
     color: #fff;
     padding: 1rem;
     border-top-right-radius: 10px;
@@ -145,7 +169,7 @@ body {
     }
 
 .verify-bg {
-    background: #071832;
+    background: #2daeff;
     color: #fff;
     padding: 2.5rem;
 }
@@ -157,12 +181,17 @@ body {
 .verify-btn {
     margin-top: 3rem;
     padding-bottom: 1.2rem;
+    color: #fff!important;
 }
 
+/* Applicant status page */
 .cs-label {
     background: #252525;
     color: #fff;
     border-radius: 10%;
+}
+.badge.badge-secondary {
+    float: right;
 }
 .status-body {
     margin-top:2rem;
@@ -170,6 +199,18 @@ body {
 .status-btn a {
     padding: 1.3rem;
     border: solid #000 2px;
+}
+
+/* Admin Panel -- Application Management */
+.bg-dark {
+    background:transparent!important;
+    padding: .5rem 0;
+}
+#am-title {
+    padding: 1.2rem 0;
+}
+.chkBox {
+    padding: .5rem;
 }
 /* Copywrite footer */
 footer {

@@ -3,6 +3,55 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <h2>Manage Applications</h2>
+    <h2 id="am-title">Application Management</h2>
+    <nav class="navbar navbar-dark bg-dark">
+      <!-- Process Controls -->
+      <div class="form-inline">
+        <button class="btn btn-success mr-2">Accept</button>
+        <button class="btn btn-danger">Deny</button>
+      </div>
+
+      <!-- Search Controls -->
+      <form class="form-inline">
+        <select class="form-control mr-2" name="filter">
+          <option value="All">Show All</option>
+          <option value="All">Show Pending</option>
+          <option value="All">Show Accepted</option>
+          <option value="All">Show Denied</option>
+        </select>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </nav>
+
+    <!-- Data to process or search -->
+    <form method="POST">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            <th scope="col">Status</th>
+            <th scope="col">Applicant Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Zip Code</th>
+            <th scope="col">Submit Datetime</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in apps %}
+            <tr name="process{{ row[0] }}">
+              <td>
+                <input type="checkbox" name="selectApp{{ row[0] }}" class="">
+              </td>
+              <td>{{ row[1] }}</td>
+              <td>{{ row[2] }} {{ row[3] }}</td>
+              <td>{{ row[4] }}</td>
+              <td>{{ row[5] }}</td>
+              <td>{{ row[6] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </form>
 </div>
 {% endblock %}

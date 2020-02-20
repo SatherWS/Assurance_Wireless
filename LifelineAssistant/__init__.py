@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL, MySQLdb
 import re
-from .views.sessionView import sessionView
+from .views.sessionControl import sessionControl
 
 app = Flask(__name__)
 
@@ -13,7 +13,9 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 app.secret_key = "aknfn348h23h5rwainfoanfw4"
 mysql = MySQL(app)
 
-app.register_blueprint(sessionView)
+# Registers external view control scripts
+app.register_blueprint(sessionControl)
+
 # Adds new entries to awla_db.user and awla.applications
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -47,8 +49,8 @@ def register():
         cell = request.form['phone']
 
         # insert statement applications table
-        sql = "INSERT INTO applications(applicant_email, fname, lname, language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)"
-        values = (email, fname, lname, language, zip_code, street, city, state)
+        sql = "INSERT INTO applications(applicant_email, phone_number, fname, lname, language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        values = (email, cell, fname, lname, language, zip_code, street, city, state)
         cur.execute(sql, values)
         mysql.connection.commit()
         return redirect(url_for("home"))
@@ -86,6 +88,7 @@ def logout():
 def home():
     return render_template("home.html")
 
+# Consider deleting below 2 views
 @app.route("/about/")
 def about():
     return render_template("about.html")
@@ -95,12 +98,6 @@ def contact():
     return render_template("contact.html")
 
 # View functions for logged in customers and employees
-"""
-@app.route("/status/")
-def status():
-    return render_template("status.html")
-"""
-
 @app.route("/admin_templates/accounts.html")
 def accounts():
     return render_template("admin_templates/accounts.html")
