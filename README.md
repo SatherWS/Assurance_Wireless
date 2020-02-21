@@ -1,5 +1,11 @@
-# Lifeline Application Management & Support System 
-This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. This project was written using Visual Studio Code IDE. Other text editors like PyCharm could work aswell.
+# Assurance Wireless Website Version 2.0
+### A Lifeline Application Management & Support System 
+This repository contains a rebuild of the current website https://www.assurancewireless.com/. The goals of this project is to improve Assurance Wireless's Lifeline application process by implementing the following features and services.
+* Improved Online Application
+* Application Status Checker
+* Application Management Console for AW Employees
+* Technical support chat room.
+
 
 ## Problems to Solve: 
 ### Web App Functions / UI Tools
@@ -35,7 +41,7 @@ app.config['MYSQL_PASSWORD'] = '<your password>'
 mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PASSWORD', db='awla_db')
 ```
 
-## Running the app in development mode
+## Running the app 
 In an integrated terminal or command prompt enter the following commands in the project's directory.
 ```
 set FLASK_APP=LifelineAssistant 
