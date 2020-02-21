@@ -8,7 +8,7 @@ sessionControl = Blueprint('sessionControl', __name__, template_folder='template
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
 
 
-# controls data in a customer's status view
+# Displays application status for logged in customer
 @sessionControl.route("/status")
 def showStatus():
     if session['email']:
@@ -21,7 +21,7 @@ def showStatus():
     return render_template("status.html", rs=rs)
 
 
-# controls data in application management view
+# Shows data in application management view
 @sessionControl.route("/applications")
 def showApps():
     if session['admin']:
@@ -32,3 +32,12 @@ def showApps():
         for row in curs:
             apps.append(row)
     return render_template("admin_templates/applications.html", apps=apps)
+
+
+# Modify application status
+@sessionControl.route("/updateApps", methods=['GET', 'POST'])
+def updateApps():
+    if request.post == "POST":
+        return "test"
+        
+    return render_template("admin_templates/applications.html")
