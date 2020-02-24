@@ -4,7 +4,9 @@
     height: 100vh;
     background-repeat: no-repeat;
     background-position-x: 105%;
+    /*
     background-position-y: -140%;
+    */
 }
 .hero-div {
     display: table; 
@@ -211,6 +213,7 @@ body {
 }
 #am-title {
     padding: 1.2rem 0;
+    margin-bottom: 0;
 }
 .chkBox {
     padding: .5rem;

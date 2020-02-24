@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lifeline Assistant</title>
+    <title>Assurance Wireless</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
@@ -81,6 +81,7 @@
                         <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" />
                         <p>Don't have an account? Sign up <a href="#">here</a></p>
                         <input type="submit" value="Sign In" class="btn btn-success" />
+                        <!-- Error message here [NOT IMPLEMENTED]-->
                         {% if msg %}
                             <p>{{ msg }}</p>
                         {% endif %}

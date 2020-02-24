@@ -31,7 +31,8 @@ def register():
         cur = mysql.connection.cursor()
         
         # insert data into users table
-        sql = "INSERT INTO users (fname, lname, email, password, ssn, dob) VALUES (%s,%s,%s,%s,%s,%s)"
+        sql = """INSERT INTO users (fname, lname, email, 
+        password, ssn, dob) VALUES (%s,%s,%s,%s,%s,%s)"""
         values = (fname, lname, email, password, ssn, dob)
         cur.execute(sql, values)
         mysql.connection.commit()
@@ -48,7 +49,8 @@ def register():
         cell = request.form['phone']
 
         # insert data into applications table
-        sql = "INSERT INTO applications(applicant_email, phone_number, fname, lname, language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+        sql = """INSERT INTO applications(applicant_email, phone_number, fname, lname, 
+        language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         values = (email, cell, fname, lname, language, zip_code, street, city, state)
         cur.execute(sql, values)
         mysql.connection.commit()

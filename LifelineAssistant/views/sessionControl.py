@@ -13,7 +13,8 @@ mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
 def showStatus():
     if session['email']:
         curs = mysql.cursor() 
-        sql = "select fname, lname, created, status, zipcode, street, city, state from applications where applicant_email = %s"
+        sql = """select fname, lname, created, status, zipcode,
+         street, city, state from applications where applicant_email = %s"""
         user = session['email']
         curs.execute(sql, [user])
         data = curs.fetchall()
@@ -26,7 +27,8 @@ def showStatus():
 def showApps():
     if session['admin']:
         curs = mysql.cursor()
-        sql = "select appid, status, fname, lname, applicant_email, zipcode, created from applications"
+        sql = """select appid, status, fname, lname, 
+        applicant_email, zipcode, created from applications"""
         curs.execute(sql)
         apps = []
         for row in curs:
@@ -35,9 +37,32 @@ def showApps():
 
 
 # Modify application status
-@sessionControl.route("/updateApps", methods=['GET', 'POST'])
-def updateApps():
-    if request.post == "POST":
-        return "test"
-        
+@sessionControl.route("/processApps", methods=['GET', 'POST'])
+def processApps():
+    if request.method == "POST":
+        if "search-btn" in request.form:
+            if request.form.get('filter') == 'All':
+                return showApps()
+            curs = mysql.cursor()
+            sql = """select appid, status, fname, lname, 
+            applicant_email, zipcode, created from applications
+            where status = %s"""
+            value = [request.form.get('filter')]
+            curs.execute(sql, value)
+            apps = []
+            for row in curs:
+                apps.append(row)
+            return render_template("admin_templates/applications.html", apps=apps)
+            
+        elif "submit_btn" in request.form:
+            curs = mysql.cursor()
+            apps = request.form.getlist("selected")
+            status = request.form["submit_btn"]
+            for i in apps:
+                sql = "update applications set status = %s where appid = %s"
+                values = (status, i)
+                curs.execute(sql, values)
+                mysql.commit()
+            return showApps()
     return render_template("admin_templates/applications.html")
+

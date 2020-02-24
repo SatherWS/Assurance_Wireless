@@ -4,28 +4,39 @@
 {% block content %}
 <div class="container">
     <h2 id="am-title">Application Management</h2>
-    <nav class="navbar navbar-dark bg-dark">
-      <!-- Process Controls -->
-      <div class="form-inline">
-        <button onclick="getTabledForm()" type="submit" class="btn btn-success mr-2">Accept</button>
-        <button type="submit" class="btn btn-danger">Deny</button>
-      </div> 
-
-      <!-- Search Controls -->
-      <div class="form-inline">
-        <select class="form-control mr-2" name="filter">
-          <option value="All">Show All</option>
-          <option value="All">Show Pending</option>
-          <option value="All">Show Accepted</option>
-          <option value="All">Show Denied</option>
-        </select>
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </div>
-    </nav>
-
+ 
     <!-- Data to process or search -->
-    <form action="{{url_for('sessionControl.updateApps')}}" method="POST" id="apps">
+    <form action="{{url_for('sessionControl.processApps')}}" method="POST" id="apps">
+      <nav class="navbar navbar-dark bg-dark">
+      
+        <!-- Container for Accept & Deny Buttons -->
+        <div class="form-inline">
+          <button type="submit" value="Accepted" name="submit_btn"
+            class="btn btn-success mr-2">Accept
+          </button>
+  
+          <button type="submit" value="Denied" name="submit_btn"
+           class="btn btn-danger">Deny
+          </button>
+        </div>
+  
+        <!-- Search Controls -->
+        <div class="form-inline">
+          <select class="form-control mr-2" name="filter">
+            <option value="All">Show All</option>
+            <option value="Pending">Show Pending</option>
+            <option value="Accepted">Show Accepted</option>
+            <option value="Denied">Show Denied</option>
+          </select>
+          
+          <!-- Search field and search button -->
+          <input class="form-control mr-sm-2" type="search" 
+          placeholder="Search" aria-label="Search">
+
+          <button name="search-btn" type="submit"
+          class="btn btn-outline-success my-2 my-sm-0">Search</button>
+        </div>
+      </nav>
       <table class="table table-hover">
         <thead>
           <tr>
@@ -39,11 +50,11 @@
         </thead>
         <tbody>
           {% for row in apps %}
-            <tr name="process{{ row[0] }}">
+            <tr name="process">
               <td>
-                <input type="checkbox" name="selectApp{{ row[0] }}" value="asdf">
+                <input type="checkbox" name="selected" value="{{row[0]}}">
               </td>
-              <td>{{ row[1] }}</td>
+              <td>{{ row[1] }}</td> <!-- app status string -->
               <td>{{ row[2] }} {{ row[3] }}</td>
               <td>{{ row[4] }}</td>
               <td>{{ row[5] }}</td>
@@ -54,10 +65,5 @@
       </table>
     </form>
 </div>
-<script>
-function getTabledForm() {
-  var table = document.getElementById("apps").submit();
-  return table;
-}
-</script>
+
 {% endblock %}

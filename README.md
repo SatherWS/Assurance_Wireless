@@ -1,5 +1,5 @@
 # Lifeline Application Management System 
-This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. This project was written using Visual Studio Code IDE. Other text editors like PyCharm could work aswell.
+This repository contains a hypothetical web application for Assurance Wireless. This project's goal is to improve Assurance Wireless's Lifeline application process. This project was written using Visual Studio Code IDE. Other text editors like PyCharm could work as well.
 
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
@@ -35,9 +35,9 @@ flask run
   * View located here `/Views/admin_templates/accounts.html`
  
  ### Fraud Prevention / Data Integrity 
- * Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
+ * Use Email Validation API to prevent users from entering non-existent email addresses - *High Importance*
    * https://pypi.org/project/email-verifier/
- * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
+ * Mimic existing zip code API to generate the city and state that belongs to a zip code - *Medium Importance* 
 
 ### IRC Chat & Virtual Assistant
 * Research how to integrate a chat room component to the project - *High Importance*
