@@ -7,18 +7,18 @@ This repository contains a rebuild of the current website https://www.assurancew
 * Technical support chat room.
 
 
-## Problems to Solve: 
-### Web App Functions / UI Tools
+## Features & Related Functionalities 
+### Admin Console
 * Build admin panel for accepting/denying customer applications (In Progress)
 * Build admin tool for managing customers (Not Started)
   * View located here `/Views/admin_templates/accounts.html`
  
-### Fraud Prevention / Data Integrity 
+### Online Application Process
 * Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
   * https://pypi.org/project/email-verifier/
 * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
 
-### IRC Chat & Virtual Assistant
+### IRC Chat & Virtual Assistant 
 * Research how to integrate a chat room component to the project - *High Importance*
 * Research how to build a bot for the IRC channel. The bot will answer a few general questions - *Medium Importance*
 
