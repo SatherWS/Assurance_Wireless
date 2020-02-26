@@ -18,8 +18,11 @@ This repository contains a rebuild of the current website https://www.assurancew
   * https://pypi.org/project/email-verifier/
 * Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
 
-### IRC Chat & Virtual Assistant 
-* Research how to integrate a chat room component to the project - *High Importance*
+### IRC Chatroom 
+* Using Socket IO
+
+
+#### Bonus Feature: Virtual Assistant (bot)
 * Research how to build a bot for the IRC channel. The bot will answer a few general questions - *Medium Importance*
 
 ## Dependencies and Prerequisites
