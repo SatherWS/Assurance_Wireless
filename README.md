@@ -62,7 +62,10 @@ mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PAS
 ```
 
 ## Running the app 
-In an integrated terminal or command prompt enter the following commands in the project's directory.
+
+1) **Run ampps.** Install it if you don't have it. No additional setup is required as long as it's installed on your computer.
+
+2) In an integrated terminal or command prompt enter the following commands in the project's directory.
 ```
 set FLASK_APP=LifelineAssistant 
 set FLASK_DEBUG=1
