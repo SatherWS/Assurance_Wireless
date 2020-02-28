@@ -4,22 +4,18 @@ This repository contains a rebuild of the current website https://www.assurancew
 
 ## Features & Related Functionalities 
 ### Revised Online Application
-#### Use Cases
-* Submit Application
-* Check Application Status
-* Create Account (implements sumbit applcation)
-#### Functional Requirements
-* A user account must be created once an application is successfully submitted
-* A customer must be able to view his application status after logging in (completed)
+Our online application process differs from Assurance Wireless's current process by giving prospective customers the ability to monitor the status of their Lifeline application. The current system in place does not allow users to check when or if they will recieve free or discounted cellular services until after their application is accepted.
 
 #### TODO:
-* Fix bugs: null users, user account can be created from failed application submition
-  * Function `register()` in line 22 of `LifelineAssistant/__init__.py` needs to be split in two
-* Use Email Validation API to prevent users from entering non-existent email addresses - *High Importantce*
+* Function `register()` in line 22 of `LifelineAssistant/__init__.py` needs to be split in two
+* Use Email Validation API to prevent users from entering non-existent email addresses - *Medium Importantce*
   * https://pypi.org/project/email-verifier/
-* Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Medium Importance* 
+* Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Low Importance*
+* Re-use content of original website to better describe Assurance Wireless's products and services - *Medium Importantce*
 
 ### Admin Console
+
+
 #### Use Cases
 * Modifying Applications: Accepy, Deny
 * View Applications: Filter by status, search distinct strings
