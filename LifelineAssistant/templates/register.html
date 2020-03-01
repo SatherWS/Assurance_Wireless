@@ -9,15 +9,15 @@
         <h2 class="reg-head">Apply for Free Mobile Phone Services</h2>
         <p>First we will need some information so we can contact you later with the results of your application.</p>
         <form action="/register" method="post">
-            <input name="zipcode" type="number" placeholder="Enter your zip code" class="form-control su">
-            <input name="street" type="address" placeholder="Enter your street address" class="form-control su">
+            <input name="zipcode" type="number" placeholder="Enter your zip code" class="form-control su" required>
+            <input name="street" type="address" placeholder="Enter your street address" class="form-control su" required>
             <div class="row">
                 <div class="col-md-8">
-                    <input name="city" type="text" placeholder="Enter your city" class="form-control su">
+                    <input name="city" type="text" placeholder="Enter your city" class="form-control su" required>
                 </div>
 
                 <div class="col-md-4">
-                    <select name="state" class="form-control su">
+                    <select name="state" class="form-control su" required>
                         <option value="AZ">Arizona</option>
                         <option value="NJ">New Jersey</option>
                         <option value="NY">New York</option>
@@ -26,21 +26,21 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    <input name="first" type="text" placeholder="First Name" class="form-control su">
+                    <input name="first" type="text" placeholder="First Name" class="form-control su" required>
                 </div>
                 <div class="col-md-6">
-                    <input name="last" type="text" placeholder="Last Name" class="form-control su">
+                    <input name="last" type="text" placeholder="Last Name" class="form-control su" required>
                 </div>
             </div>
             
             <p class="su">Please enter your date of birth followed by the last four digits of your social security number.</p>
             <div class="row">
                 <div class="col-md-6">
-                    <input type="date" name="dob" placeholder="Date of birth" class="form-control su">
+                    <input type="date" name="dob" placeholder="Date of birth" class="form-control su" required>
                 </div>
 
                 <div class="col-md-6">
-                    <input type="number" name="ssn" placeholder="Last 4 digits of SSN" class="form-control su">
+                    <input type="number" name="ssn" placeholder="Enter valid SSN" class="form-control su" required>
                 </div>
             </div>
 
@@ -53,8 +53,8 @@
             </select>
             
             <p class="su"><b>Note:</b> The below two fields will allow you to login and track the status of your application.</p>
-            <input name="email" type="text" placeholder="Email" class="form-control su">
-            <input name="password" type="password" placeholder="Password" class="form-control su">
+            <input name="email" type="text" placeholder="Email" class="form-control su" required>
+            <input name="password" type="password" placeholder="Password" class="form-control su" required>
             
             <!-- Submit form to server -->
             <button type="submit" class="btn btn-success su">Submit Application</button>

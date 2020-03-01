@@ -1,5 +1,4 @@
 
-
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
 * Pip version 3.0 or greater
@@ -23,9 +22,4 @@ mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PAS
 
 1) **Run ampps.** Install it if you don't have it. No additional setup is required as long as it's installed on your computer.
 
-2) In an integrated terminal or command prompt enter the following commands in the project's directory.
-```
-set FLASK_APP=LifelineAssistant 
-set FLASK_DEBUG=1
-flask run
-````
+

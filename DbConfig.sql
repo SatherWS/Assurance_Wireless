@@ -46,6 +46,7 @@ create table if not exists applications (
 	foreign key(applicant_email) references users(email)
 );
 
+
 -- create applications
 insert into applications
 (applicant_email, fname, lname, language, zipcode, street, city, state) values 
