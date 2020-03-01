@@ -1,0 +1,25 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="ticket-style">
+            <h1>Customer Support Chat</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <p>{{ form.name.label }}</p>
+                {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}
+                <br><br>
+                <p>Type a brief description of your problem</p>
+                {{ form.room(rows='5', cols='30') }}
+                {% for error in form.room.errors %}
+                    {{ error }}
+                {% endfor %}
+                <br><br>
+                {{ form.submit() }}
+            </form>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>
+{% endblock %}

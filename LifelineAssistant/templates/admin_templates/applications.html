@@ -3,10 +3,10 @@
 {% endblock %}
 {% block content %}
 <div class="container">
-    <h2 id="am-title">Application Management</h2>
+    <h2 class="am-title">Application Manager</h2>
  
     <!-- Data to process or search -->
-    <form action="{{url_for('sessionControl.processApps')}}" method="POST" id="apps">
+    <form action="{{url_for('.processApps')}}" method="POST" id="apps">
       <nav class="navbar navbar-dark bg-dark">
       
         <!-- Container for Accept & Deny Buttons -->
@@ -42,7 +42,7 @@
           <tr>
             <th scope="col"></th>
             <th scope="col">Status</th>
-            <th scope="col">Applicant Name</th>
+            <th scope="col">Applicant</th>
             <th scope="col">Email</th>
             <th scope="col">Zip Code</th>
             <th scope="col">Submit Datetime</th>

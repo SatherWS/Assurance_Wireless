@@ -8,12 +8,12 @@
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}"/>
-    
+    {% block head %} {% endblock %}
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('home') }}">
-            <img src="{{ url_for('static', filename='imgs/AS-logo.png') }}" height="75px">
+        <a class="navbar-brand" href="{{ url_for('main.home') }}">
+            <img src="{{ url_for('static', filename='imgs/AS-logo.png') }}" height="85px">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -22,38 +22,33 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
           <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('about') }}">About Us</a>
+              <a class="nav-link" href="{{ url_for('main.support') }}">Support Chat</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a>
+              <a class="nav-link" href="{{ url_for('main.about') }}">About Us</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" target="_blank" href="https://www.assurancewireless.com/">National Verifier</a>
+              <a class="nav-link" href="{{ url_for('main.contact') }}">Contact Us</a>
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
             {% if session['admin'] %}
-                <div class="dropdown lb">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" 
-                    id="dropdownMenuButton" data-toggle="dropdown" 
-                    aria-haspopup="true" aria-expanded="false">
-                        Admin Controls
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" 
-                            href="{{ url_for('sessionControl.showApps') }}">
-                            Manage Applications
-                        </a>
-                        <a class="dropdown-item" href="#">Manage Users</a>
-                    </div>
-                </div>
-                <a class="btn cstm-btn" href="/logout">Log Out</a>
+                <a class="btn btn-secondary lb" type="button"
+                   href="">
+                   Chat Queue
+                </a>
+                <a class="btn btn-secondary lb" type="button"
+                   href="{{ url_for('main.showApps') }}">
+                   Application Manager
+                </a>
+                <a class="btn cstm-btn" href="{{ url_for('main.logout') }}">Log Out</a>
+
             {% elif session['email'] %}
-                <a class="btn btn-primary lb" href="{{ url_for('sessionControl.showStatus') }}">Application Status</a>
+                <a class="btn btn-secondary lb" href="{{ url_for('main.showStatus') }}">Application Status</a>
                 <a class="btn cstm-btn" href="/logout">Log Out</a>
             {% else %}
-                <a class="btn btn-primary lb" href="{{ url_for('register') }}">Apply Today</a>
-                <a class="btn cstm-btn" data-toggle="modal" data-target="#loginModal">Log In</a>
+                <a class="btn btn-primary lb" href="{{ url_for('main.register') }}">Apply Today</a>
+                <a class="btn cstm-btn" href="{{ url_for('main.login') }}">Log In</a>
             {% endif %}
           </form>
         </div>
@@ -62,50 +57,6 @@
     <!-- Dynamic Content Here-->
     {% block content %}
     {% endblock %}
-
-    <!-- Login Modal -->
-    <div id="loginModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header row"></div>
-                <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-            
-                <!-- Login Form -->
-                <div class="login-modal">
-                    <h3>Welcome Back</h3>
-                    <form action="/login" method="post">
-                        <input id="email_field" name="username" type="text" placeholder="Enter Email" class="form-control"/>
-                        <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" />
-                        <p>Don't have an account? Sign up <a href="#">here</a></p>
-                        <input type="submit" value="Sign In" class="btn btn-success" />
-                        <!-- Error message here [NOT IMPLEMENTED]-->
-                        {% if msg %}
-                            <p>{{ msg }}</p>
-                        {% endif %}
-                    </form>
-                </div>
-                </div>
-                <div class="col-md-2"></div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Virtual Assistant Window -->
-    <iframe
-        id="bot"
-        src=""  
-        style='min-width: 400px;'>
-    </iframe>
-    <div id="bot-block">
-        <h6 onclick="showBot()">Start Chat<i class="fa-info-circle"></i></h6>
-    </div>
 
     <!-- Footer -->
     <div class="container body-content">
