@@ -50,20 +50,16 @@ All tickets and messages are saved in separate tables in the database `awla_db`
 ## Set Up
 1. Clone or download this repository
 2. Install flask using command `pip install flask`
-3. Configure database in mysql shell with command `source C:/path/to/Assurance_Wireless/DbConfig.sql`
-4. Replace lines 11 and 12 of `/LifelineAssistant/__init__.py` with your own mysql credentials
-```
-app.config['MYSQL_USER'] = '<your username>'
-app.config['MYSQL_PASSWORD'] = '<your password>'
-```
-5. Replace line 8 of `/LifelineAssistant/views/sessionView.py` with your own mysql credentials
+3. Replace MySQL connection strings with your own credentials in the following lines
+    * line 11 of `/LifelineAssistant/main/UserRoutes.py`
+    * line 7 of `/LifelineAssistant/main/AdminRoutes.py`
+    * line 6 of `/LifelineAssistant/main/ChatEvents.py`
 ```
 mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PASSWORD', db='awla_db')
 ```
 
 ## Running the app 
-
 1) **Run ampps.** Install it if you don't have it. No additional setup is required as long as it's installed on your computer.
-
-2) **Run startup.py**
+2) **Setup Database** in mysql shell with command `source C:/path/to/Assurance_Wireless/DbConfig.sql`. If you skip this step the project will crash.
+3) **Run startup.py** This script is the launching point of the entire application
 
