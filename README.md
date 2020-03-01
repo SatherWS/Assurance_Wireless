@@ -1,42 +1,4 @@
-# Assurance Wireless Website Version 2.0
-### A Lifeline Application Management & Support System 
-This repository contains a rebuild of the current website https://www.assurancewireless.com/. The goals of this project is to improve Assurance Wireless's Lifeline application process by implementing the following features and services.
 
-## Features & Related Functionalities 
-### Revised Online Application
-Our online application process differs from Assurance Wireless's current process by giving prospective customers the ability to monitor the status of their Lifeline application. The current system in place does not allow users to check when or if they will recieve free or discounted cellular services until after their application is accepted.
-
-#### TODO:
-* Function `register()` in line 22 of `LifelineAssistant/__init__.py` needs to be split in two
-* Use Email Validation API to prevent users from entering non-existent email addresses - *Medium Importantce*
-  * https://pypi.org/project/email-verifier/
-* Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Low Importance*
-* Re-use content of original website to better describe Assurance Wireless's products and services - *Medium Importantce*
-
-### Admin Console
-
-
-#### Use Cases
-* Modifying Applications: Accepy, Deny
-* View Applications: Filter by status, search distinct strings
-* Modify user accounts (pending)
-   * View located here `/Views/admin_templates/accounts.html`
-
-### Customer Support Chatroom
-#### Use Cases
-* Ask Question (customer)
-* Respond to Question (employee)
-* View Chat Queue (employee)
-
-#### Chat Room Tech Stack
-* Socket IO API
-* jQuery
-* Python
-* MySQL
-
-
-#### Bonus Feature: Virtual Assistant (bot)
-* Research how to build a bot for the IRC channel. The bot will answer a few frequently asked questions by customers - *Medium Importance*
 
 ## Dependencies and Prerequisites
 * Python version 3.0 or greater 
