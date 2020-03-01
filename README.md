@@ -27,17 +27,12 @@ This feature allows customers and potential customers alike to ask questions abo
 A given customer creates a ticket based on a brief description of their problem and then an employee converses with the requester until a solution is determined.
 All tickets and messages are saved in separate tables in the database `awla_db`
  
-#### Use Cases
-* Ask Question (customer)
-* Respond to Question (employee)
-* View Chat Queue (employee)
-
-#### Chat Room Tech Stack
-* Socket IO API
-* jQuery
-* Python
-* MySQL
-
+| Actor | Use Case |
+| --- | --- |
+| Customer | Asks Question |
+| Employee | Responds to Question |
+| Employee | Views Chat Queue |
+| Employee | Views Log File |
 
 #### Bonus Feature: Virtual Assistant (bot)
 * Research how to build a bot for the IRC channel. The bot will answer a few frequently asked questions by customers - *Medium Importance*
@@ -60,6 +55,6 @@ mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PAS
 
 ## Running the app 
 1) **Run ampps.** Install it if you don't have it. No additional setup is required as long as it's installed on your computer.
-2) **Setup Database** in mysql shell with command `source C:/path/to/Assurance_Wireless/DbConfig.sql`. If you skip this step the project will crash.
+2) **Setup Database** in a mysql shell run the command `source C:/path/to/Assurance_Wireless/DbConfig.sql`. If you skip this step the project will crash.
 3) **Run startup.py** This script is the launching point of the entire application
 
