@@ -1,5 +1,5 @@
-    var socket = io();
 
+    var socket = io();
     $(document).ready(function() {
         socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
 
