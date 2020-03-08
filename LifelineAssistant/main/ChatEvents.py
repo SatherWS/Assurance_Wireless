@@ -11,35 +11,29 @@ def joined(message):
     """Sent by clients when they enter a room.
     A status message is broadcast to all people in the room."""
     room = session.get('room')
-    user = session.get('name')
-    curs = mysql.cursor()
-    sql = "insert into tickets(title, requester) values (%s, %s)"
-    values = [room, user]
-    curs.execute(sql, values)
-    mysql.commit()
-
+    user = session.get('email')
     join_room(room)
     emit('status', {'msg': user + ' has entered the room.'}, room=room)
 
 
+# TODO/REFACTOR: SEPARATE INTO TWO METHODS
 @socketio.on('text', namespace='/chat')
 def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
     room = session.get('room')
-    user = session.get('name')
+    user = session.get('email')
     curs = mysql.cursor()
-    """
-    # adds messages to db with ticket foreign key
+
+    # SQL block finds message's foreign key for it's related ticket
     sql = "select (id) from tickets where title = %s"
-    ticket_id = curs.execute(sql, room)
-    sql = "insert into messages(user, msg, ticket_id) values (%s, %s, %s)"
-    values = [user, message, ticket_id]
-    curs.execute(sql, values)
+    curs.execute(sql, [room])
+    ticket_id = curs.fetchone()
     mysql.commit()
-    """
-    sql = "insert into messages(client_email, msg) values (%s, %s)"
-    values = [user, message]
+
+    # SQL block adds messages to db with ticket foreign key
+    sql = "insert into messages(client_email, msg, ticket_id) values (%s, %s, %s)"
+    values = [user, message, ticket_id]
     curs.execute(sql, values)
     mysql.commit()
     emit('message', {'msg': user + ':' + message['msg']}, room=room)
@@ -52,4 +46,13 @@ def left(message):
     room = session.get('room')
     leave_room(room)
     emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)
+
+
+"""
+@socketio.on('select', namespace='/chat')
+def join_chat():
+    room = session.get('room')
+    join_room(room)
+    emit('status', {'msg': session.get('name') + ' has joined the room.'}, room=room)
+"""
 

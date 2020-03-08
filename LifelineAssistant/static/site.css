@@ -1,13 +1,4 @@
-/* Test Landing Page - about.html */
-.img-bg2 {
-    background-image: url("imgs/align-left-bg.jpg");
-    height: 100vh;
-    background-repeat: no-repeat;
-    background-position-x: 105%;
-    /*
-    background-position-y: -140%;
-    */
-}
+
 .hero-div {
     display: table; 
     height: 65vh; 
@@ -26,6 +17,10 @@ Assurance Wireless Colors
 #D62025 - Virgin Moblie red
 */
 
+/* provides space for fixed nav */
+.nav-spacing {
+    margin-top: 2.5rem;
+}
 body {
     padding-top: 85px;
     padding-bottom: 20px;
@@ -45,43 +40,12 @@ body {
     margin-right: 10px;
 }
 
-/*
-DELETE OLD LANDING PAGE
-
-.landing-area {
-    left: 0;
-    top: 0;
-    -webkit-clip-path: polygon(0 0, 100% 0%, 50% 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0%, 70% 0%, 0% 100%); 
-    height: 90vh;
-    background-image: url("imgs/landing-img.jpg");
-    background-position: 20%;
+.img-bg2 {
+    background-image: url("imgs/align-left-bg.jpg");
+    height: 100vh;
     background-repeat: no-repeat;
+    background-position-x: 105%;
 }
-
-
-.landing-content {
-    z-index: 1;
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 60%;
-    text-align: right;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-    .landing-content h1 {
-        font-size: 32pt;
-    }
-    .landing-content p {
-        font-size: 18pt;
-    }
-    .landing-content a {
-        font-size: 16pt;
-        color: #fff!important;
-        
-    }
-*/
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -206,8 +170,20 @@ span.badge.badge-light.badge-top {
 }
 
 /* Chat Room Styles */
-.ticket-style {
-    margin-top: 2.2rem;
+#chat {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#text {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.msg-container {
+    padding-left: 0;
+}
+.ticket-title {
+    margin-top: 3rem;
+}
+.ticket-title h1 {
+    padding-bottom: 1rem;
 }
 
 /* Admin Panel -- Application Management */

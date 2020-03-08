@@ -41,7 +41,7 @@ def processApps():
             
         elif "submit_btn" in request.form:
             curs = mysql.cursor()
-            apps = request.form.getlist("selected")
+            apps = request.form.getlist("selected[]")
             # set status variable to value of accept or deny button
             status = request.form["submit_btn"]
             for i in apps:
@@ -52,3 +52,16 @@ def processApps():
             return showApps()
     return render_template("admin_templates/applications.html")
 
+
+# Show all tickets in the queue
+@main.route("/queue")
+def chatQueue():
+    if session['admin']:
+        curs = mysql.cursor()
+        sql = """select id, title, requester, acceptor, time_created 
+            from tickets order by time_created asc"""
+        curs.execute(sql)
+        tickets = []
+        for row in curs:
+            tickets.append(row)
+    return render_template("admin_templates/queue.html", tickets=tickets)

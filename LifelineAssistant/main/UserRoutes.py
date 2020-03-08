@@ -11,9 +11,10 @@ from .ChatForm import TicketForm
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
 
 
-# Adds new entries to awla_db.user and awla.applications
+# TODO/REFACTOR: SEPARATE INTO TWO METHODS
 @main.route('/register', methods=['GET', 'POST'])
 def register():
+    """ Adds new entries to awla_db.user and awla.applications """
     if request.method == 'GET':
         return render_template('register.html')
     else:
@@ -44,13 +45,14 @@ def register():
         state = request.form.get('state')
         cell = request.form['phone']
 
-        # insert data into applications table
+        # TODO: IF SQL DATA INTEGRITY CONSTRAINT IS TRIGGERED ACCOUNT IS WRONGFULLY CREATED
+        # inserts data into applications table
         sql = """insert into applications(applicant_email, phone_number, fname, lname, 
         language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
         values = (email, cell, fname, lname, language, zip_code, street, city, state)
         cur.execute(sql, values)
         mysql.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("main.home"))
     return render_template("register.html")
 
 
@@ -90,9 +92,10 @@ def logout():
 def showStatus():
     if session['email']:
         curs = mysql.cursor()
-        # TODO: GET DATE SUBMITTED W/ JOIN STATEMENT
-        sql = """select fname, lname, created, status, zipcode,
-         street, city, state from applications where applicant_email = %s"""
+        sql = """select applications.fname, applications.lname, applications.created, applications.status, applications.zipcode,
+            applications.street, applications.city, applications.state, users.dob from applications 
+            inner join users on applications.applicant_email = users.email
+            where applicant_email = %s;"""
         user = session['email']
         curs.execute(sql, [user])
         data = curs.fetchall()
@@ -105,24 +108,38 @@ def support():
     """Login form to enter a room."""
     form = TicketForm()
     if form.validate_on_submit():
-        session['name'] = form.name.data
+        session['email'] = form.email.data
         session['room'] = form.room.data
-        return redirect(url_for('.chat'))
+        return redirect(url_for('.createTicket'))
     elif request.method == 'GET':
-        form.name.data = session.get('name', '')
+        form.email.data = session.get('email', '')
         form.room.data = session.get('room', '')
     return render_template("support.html", form=form)
+
+
+@main.route('/create-ticket')
+def createTicket():
+    room = session.get('room')
+    user = session.get('email')
+    curs = mysql.cursor()
+
+    # SQL block adds ticket to db
+    sql = "insert into tickets(title, requester) values (%s, %s)"
+    values = [room, user]
+    curs.execute(sql, values)
+    mysql.commit()
+    return redirect(url_for('.chat'))
 
 
 @main.route('/chat')
 def chat():
     """Chat room. The user's name and room must be stored in
     the session."""
-    name = session.get('name', '')
+    email = session.get('email', '')
     room = session.get('room', '')
-    if name == '' or room == '':
+    if email == '' or room == '':
         return redirect(url_for('.support'))
-    return render_template('chat.html', name=name, room=room)
+    return render_template('chat.html', email=email, room=room)
 
 
 # View functions for non logged in users

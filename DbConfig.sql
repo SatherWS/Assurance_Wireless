@@ -5,6 +5,8 @@ use awla_db;
 drop table if exists comments;
 drop table if exists applications;
 drop table if exists users;
+drop table if exists messages;
+drop table if exists tickets;
 
 -- Re-populates data
 create table if not exists users (
@@ -25,10 +27,10 @@ insert into users(fname, lname, email, password, ssn, dob, admin) values
 
 -- create standard users
 insert into users(fname, lname, email, password, ssn, dob) values 
-('user1', 'smith', 'user1', 'asdf', '111122222', curdate()),
-('user2', 'Johnson', 'user2', 'asdf', '111122223', curdate()),
-('user3', 'Stevens', 'user3', 'asdf', '111122224', curdate()),
-('user4', 'Lastname', 'user4', 'asdf', '111122225', curdate());
+('Jesus', 'Smith', 'user1', 'asdf', '111122222', curdate()),
+('John', 'Johnson', 'user2', 'asdf', '111122223', curdate()),
+('Steve', 'Stevens', 'user3', 'asdf', '111122224', curdate()),
+('Firstname', 'Lastname', 'user4', 'asdf', '111122225', curdate());
 
 create table if not exists applications (
 	appid int primary key not null auto_increment,
@@ -56,6 +58,7 @@ insert into applications
 ('user4', 'user4', 'Lastname', 'English', '85002', '126 Streetname', 'Phoenix', 'AZ');
 
 
+-- Reference table for application processing
 create table if not exists comments (
 	commentid int primary key not null auto_increment,
 	body varchar(40) not null,
@@ -64,4 +67,25 @@ create table if not exists comments (
 	foreign key (userid) references users(userid),
 	foreign key (appid) references applications(appid)
 );
+
+-- Chat room tables
+CREATE TABLE `tickets` (
+  `id` int(11) NOT NULL primary key auto_increment,
+  `title` varchar(75) NOT NULL,
+  `requester` varchar(30) NOT NULL,
+  `acceptor` varchar(75) DEFAULT NULL,
+  `status` varchar(30) DEFAULT 'Open' NOT NULL, -- NOT ACCOUNTED FOR
+  `time_created` datetime DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL primary key auto_increment,
+  `client_email` varchar(75) NOT NULL,
+  `ticket_id` int(11) NOT NULL,
+  `msg` varchar(50) NOT NULL,
+  `time_submitted` datetime DEFAULT CURRENT_TIMESTAMP,
+  foreign key (ticket_id) references tickets(id)
+);
+
+
 	

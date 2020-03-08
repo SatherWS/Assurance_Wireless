@@ -32,9 +32,10 @@
             </li>
           </ul>
           <form class="form-inline my-2 my-lg-0">
+          <!-- Admin user buttons -->
             {% if session['admin'] %}
                 <a class="btn btn-secondary lb" type="button"
-                   href="">
+                   href="{{ url_for('main.chatQueue') }}">
                    Chat Queue
                 </a>
                 <a class="btn btn-secondary lb" type="button"
@@ -43,9 +44,11 @@
                 </a>
                 <a class="btn cstm-btn" href="{{ url_for('main.logout') }}">Log Out</a>
 
+           <!-- Logged in user buttons -->
             {% elif session['email'] %}
                 <a class="btn btn-secondary lb" href="{{ url_for('main.showStatus') }}">Application Status</a>
                 <a class="btn cstm-btn" href="/logout">Log Out</a>
+            <!-- Non-Logged in user buttons -->
             {% else %}
                 <a class="btn btn-primary lb" href="{{ url_for('main.register') }}">Apply Today</a>
                 <a class="btn cstm-btn" href="{{ url_for('main.login') }}">Log In</a>
@@ -65,7 +68,8 @@
             <p>&copy; 2020 - Assurance Wireless </p>
         </footer>
     </div>
-    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block js %}
+    {% endblock %}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
