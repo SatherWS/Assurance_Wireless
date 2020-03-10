@@ -8,7 +8,7 @@ import itertools
 from .ChatForm import TicketForm
 
 
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
+mysql = MySQLdb.connect(host='localhost', user='root', passwd='root', db='awla_db')
 
 
 # TODO/REFACTOR: SEPARATE INTO TWO METHODS
@@ -92,8 +92,9 @@ def logout():
 def showStatus():
     if session['email']:
         curs = mysql.cursor()
-        sql = """select applications.fname, applications.lname, applications.created, applications.status, applications.zipcode,
-            applications.street, applications.city, applications.state, users.dob from applications 
+        # SQL variable grabs user's dob from applications table
+        sql = """select applications.fname, applications.lname, applications.created, applications.status, 
+            applications.zipcode, applications.street, applications.city, applications.state, users.dob from applications 
             inner join users on applications.applicant_email = users.email
             where applicant_email = %s;"""
         user = session['email']
@@ -108,11 +109,11 @@ def support():
     """Login form to enter a room."""
     form = TicketForm()
     if form.validate_on_submit():
-        session['email'] = form.email.data
+        session['nonuser_email'] = form.nonuser_email.data
         session['room'] = form.room.data
         return redirect(url_for('.createTicket'))
     elif request.method == 'GET':
-        form.email.data = session.get('email', '')
+        form.nonuser_email.data = session.get('nonuser_email', '')
         form.room.data = session.get('room', '')
     return render_template("support.html", form=form)
 
@@ -120,9 +121,8 @@ def support():
 @main.route('/create-ticket')
 def createTicket():
     room = session.get('room')
-    user = session.get('email')
+    user = session.get('nonuser_email')
     curs = mysql.cursor()
-
     # SQL block adds ticket to db
     sql = "insert into tickets(title, requester) values (%s, %s)"
     values = [room, user]
@@ -135,8 +135,8 @@ def createTicket():
 def chat():
     """Chat room. The user's name and room must be stored in
     the session."""
-    email = session.get('email', '')
-    room = session.get('room', '')
+    email = session.get('nonuser_email', '')
+    room = session.get('nonuser_email', '')
     if email == '' or room == '':
         return redirect(url_for('.support'))
     return render_template('chat.html', email=email, room=room)

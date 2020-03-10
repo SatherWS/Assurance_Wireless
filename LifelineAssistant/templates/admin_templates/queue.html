@@ -31,19 +31,19 @@
         </tr>
     </thead>
     <tbody>
-        {% for row in tickets %}
-        <!--<tr class="channel" onclick="join_room('test 1.3');">-->
-        <tr onclick="select_room('test 1.3');">
-            <th scope="row"><a href="#">{{row[0]}}</a></th>
+    {% for row in tickets %}
+        <!--<tr class="channel" onclick="join_room('TICKET NAME HERE');">-->
+        <tr onclick="select_room('{{ row[1] }}');">
+            <th scope="row"><a href="#">{{ row[0] }}</a></th>
             {% if row[3] != None %}
-                <td id="status" onmouseover="user('{{row[3]}}');">closed</td>
+                <td id="status" onmouseover="user('{{ row[3] }}');">closed</td>
             {% endif %}
-            <td id="status2" onmouseover="user('{{row[3]}}');">open</td>
-            <td colspan="2">{{row[1]}}</td>
-            <td>{{row[2]}}</td>
-            <td>{{row[4]}}</td>
+            <td id="status2" onmouseover="user('{{ row[3] }}');">open</td>
+            <td colspan="2">{{ row[1] }}</td>
+            <td>{{ row[2] }}</td>
+            <td>{{ row[4] }}</td>
         </tr>
-        {% endfor %}
+    {% endfor %}
     </tbody>
 </table>
 </div>

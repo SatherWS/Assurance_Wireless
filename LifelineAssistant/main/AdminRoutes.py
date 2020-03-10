@@ -4,7 +4,7 @@ from . import main
 
 
 sessionControl = Blueprint('sessionControl', __name__, template_folder='templates')
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
+mysql = MySQLdb.connect(host='localhost', user='root', passwd='root', db='awla_db')
 
 
 # Shows data in application management view
@@ -65,3 +65,7 @@ def chatQueue():
         for row in curs:
             tickets.append(row)
     return render_template("admin_templates/queue.html", tickets=tickets)
+
+
+# TODO: WRITE JOIN TICKET METHOD TO BE USED BY ADMINS
+
