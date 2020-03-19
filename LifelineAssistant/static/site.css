@@ -54,12 +54,8 @@ body {
     padding-right: 15px;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
 
-/* Login & Signup */
+/* Login & Signup ************************************************************************/
 .btn-box {
     margin-top: 1rem;
 }
@@ -98,33 +94,13 @@ body {
         font-size: 20pt;
     }
 
-/* register.html */
+/* register.html ****************************************************************************/
 .reg-head {
     margin-top:1.25rem;
 }
 .su {
     margin-top:1rem;
 }
-
-/*Bootstrap Login Modal*/
-.login-modal {
-    padding-top: 0.7rem;
-}
-
-    .login-modal input {
-        margin-top: 1rem;
-        padding: .5rem;
-        border-radius: .45rem;
-    }
-
-    .login-modal p {
-        padding-top: 0.7rem;
-        padding-bottom: 0;
-    }
-
-    .login-modal a {
-        margin-bottom: 1rem;
-    }
 
 .verify-bg {
     background: #2daeff;
@@ -142,7 +118,7 @@ body {
     color: #fff!important;
 }
 
-/* Applicant status page */
+/* Applicant status page *********************************************************************/
 .cstm-card {
     margin-top:1.5rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -169,7 +145,42 @@ span.badge.badge-light.badge-top {
     border: solid #000 2px;
 }
 
-/* Chat Room Styles */
+/* Ticket Comments New Feature *****************************************************************/
+.fixed-bottom {
+    padding: .5rem 4rem;
+    background: #800f69;
+}
+
+.cm-style {
+    border-bottom: solid 1px #dadee0;
+    padding: 1rem 0;
+}
+
+#send-msg {
+    margin-right: 1rem;
+    border-radius: .6rem;
+}
+
+.option-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icons {
+    font-size: 16pt;
+}
+
+.fa {
+    margin-right: 0.5rem;
+}
+
+/* Admin Console **************************************************************************/
+.app-mngr-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Chat Room Styles Old Feature ************************************************************/
 #chat {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -189,7 +200,28 @@ span.badge.badge-light.badge-top {
     padding-bottom: 1rem;
 }
 
-/* Admin Panel -- Application Management */
+
+/* Login Form ******************************************************************************/
+/*Bootstrap Login Modal HTML IS DELETED*/
+.login-modal {
+    padding-top: 0.7rem;
+}
+
+.login-modal input {
+    margin-top: 1rem;
+    padding: .5rem;
+    border-radius: .45rem;
+}
+
+.login-modal p {
+    padding-top: 0.7rem;
+    padding-bottom: 0;
+}
+
+.login-modal a {
+    margin-bottom: 1rem;
+}
+/* Admin Panel -- Application Management ****************************************************************/
 .bg-dark {
     background:transparent!important;
     padding: .5rem 0;
@@ -202,7 +234,19 @@ span.badge.badge-light.badge-top {
 .chkBox {
     padding: .5rem;
 }
-/* Copywrite footer */
+
+
+/* Home Page & Features Section ********************************************************************/
+/* icons */
+.home-icon-area img {
+    height: 75px;
+    width: 75px;
+    margin-right: 15px;
+    float: left;
+    margin-bottom: 20px;
+}
+
+/* Copyright footer */
 footer {
     text-align: center;
 }

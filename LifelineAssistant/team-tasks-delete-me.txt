@@ -1,0 +1,23 @@
+Tasks for team members
+
+Colin:
+Development
+# allow admins to comment on whatever ticket
+# implement emailing funcitonality in app manager
+
+Gil:
+Milestone 2 Catchup
+# ask professor about class diagram
+# create view only employee user
+
+Ramon:
+Milestone 2 Catchup
+# fix use case diagram notation: get rid of get rid of generalization, change implements to whatevers correct
+# descriptions about functional requirements/use cases
+
+Lawrence:
+Development
+# fix register bug in TODO line 110 of UserRoutes.py
+# uses flashes to permit users to make mistakes when logging in
+# implement delete comment and edit comment side buttons in support chat
+# add delete application button in applications.html, its functionality must delete both the user and app

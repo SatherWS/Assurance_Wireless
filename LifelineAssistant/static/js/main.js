@@ -7,6 +7,10 @@
             socket.emit('joined', {});
         });
 
+        socket.on('connect', function() {
+            socket.emit('admin_joined', {});
+        });
+
         /* TEMPORARILY COMMENTED: DO NOT DELETE */
         socket.on('status', function(data) {
             $('#chat').val($('#chat').val() + '<' + data.msg + '>\n');
@@ -30,6 +34,7 @@
 
     });
 
+    // Having trouble calling theses functions 3-11-2020 unless inline
     function select_room(room) {
         console.log("Joining room: " + room);
         // async function

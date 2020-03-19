@@ -1,0 +1,35 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="container-fluid nav-spacing">
+<form method="post" action="{{ url_for('.select_ticket') }}">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Queue #</th>
+                <th scope="col">Status</th>
+                <th scope="col" colspan="2">Question</th>
+                <th scope="col">Inquirer</th>
+                <th scope="col">Time</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for row in tickets %}
+            <tr>
+                <!-- use parameterized urls
+                <th scope="row"><a href="{{ url_for('.select_ticket' , ticket_id=row[0]) }}">{{row[0]}}</a></th> -->
+                <!--<th scope="row"><a href="{{ url_for('.select_ticket') }}">{{row[0]}}</a></th> -->
+                <th scope="row"><input type="submit" value="{{row[0]}}" name="tkt"></th>
+                {% if row[3] != None %}
+                    <td id="status">closed</td>
+                {% endif %}
+                <td id="status2">open</td>
+                <td colspan="2">{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[4] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "_layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div class="container nav-spacing">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Respond to Ticket #{{session.get('ticket_id')}}</h3>
+            <p>User's Email: </p>
+            <p>Problem Statement: </p>
+        </div>
+        <div class="col-md-6 text-right">
+            <button class="btn btn-default">
+                <i class="fa fa-download" aria-hidden="true"></i>
+                Download Chat Log
+            </button>
+        </div>
+    </div>
+
+    {% for comment in msgs %}
+      <div class="cm-style">
+          <div class="option-box">
+            <div>
+                <small>{{comment[4]}}</small>
+                <p><strong id="mb-0">{{comment[1]}}</strong></p>
+                <p>Message: {{comment[3]}} | Ticket ID: {{comment[2]}}</p>
+            </div>
+            <div class="icons">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+                <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            </div>
+          </div>
+       </div>
+    {% endfor %}
+
+    <form method="post" class="fixed-bottom">
+        <div class="input-group sender-style">
+            <input type="text" name="msg" class="form-control" id="send-msg" placeholder="Enter you message here..." required>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" type="button">Send Message</button>
+            </span>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block js %}
+<script>
+    // prevents duplicate comments on refresh
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+{% endblock %}
