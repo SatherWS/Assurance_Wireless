@@ -9,12 +9,14 @@
                 {{ form.hidden_tag() }}
                 {{ form.contact(class_="form-control chat-style", placeholder="Enter your email") }}
                 {% for error in form.contact.errors %}{{ error }}{% endfor %}
+                 <br>
+                {{ form.category(class_="form-control chat-style") }}
+                {% for error in form.category.errors %}
+                    {{ error }}
+                {% endfor %}
                 <br>
-                {{ form.title(class_="form-control chat-style", placeholder="Type brief description") }}
-                {% for error in form.title.errors %}{{ error }}{% endfor %}
-                <br>
-                {{ form.info(rows='5', cols='30', class_="form-control chat-style", placeholder="Type a brief description of your problem") }}
-                {% for error in form.info.errors %}
+                {{ form.title(rows='5', cols='30', class_="form-control chat-style", placeholder="Type a brief description of your problem") }}
+                {% for error in form.title.errors %}
                     {{ error }}
                 {% endfor %}
                 <br>

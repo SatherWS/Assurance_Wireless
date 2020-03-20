@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint
 from flask_mysqldb import MySQL, MySQLdb
 from . import main
+from .ChatForm import MessageForm
 
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='', db='awla_db')
 
@@ -52,6 +53,7 @@ def process_apps():
                 return show_apps()
         return render_template("admin_templates/applications.html")
 
+
 @main.route('/comment-queue')
 def show_tickets():
     if session['admin']:
@@ -70,24 +72,25 @@ def show_tickets():
 def select_ticket():
     if session['admin'] and request.method == 'POST':
         curs = mysql.cursor()
-        ticket_id = request.form.get('tkt')
-        session['ticket_id'] = ticket_id
+        ticket_id = session['ticket_id']
+        sender = session.get('email')
         # displays data in responder's view
-        sql = "select * from support_messages where ticket_id = %s"
+        sql = "select * from support_messages where ticket_id = %s order by time_submitted desc"
         curs.execute(sql, [ticket_id])
         msgs = []
         for row in curs:
             msgs.append(row)
         mysql.commit()
-        return render_template('admin_templates/ticket-response.html', msgs=msgs)
 
+        form = MessageForm()
+        msg = form.msg.data
+        sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
+        values = [sender, ticket_id, msg]
+        curs.execute(sql, values)
+        mysql.commit()
+        return render_template('admin_templates/ticket-response.html', msgs=msgs, form=form)
 
-# TODO: INSERT ADMIN MESSAGES RELATED TO A TICKET
-@main.route('/ticket-response')
-def ticket_response():
-    # add message data
-    sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
-    values = []
+def send_message(ticket_id):
     pass
 
 # Show all tickets in the queue -- OLD CHAT QUEUE FOR REAL-TIME MESSAGING D/N WORK

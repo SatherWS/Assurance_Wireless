@@ -68,6 +68,8 @@ create table if not exists comments (
 	foreign key (appid) references applications(appid)
 );
 
+/*
+
 -- Chat room tables
 CREATE TABLE `tickets` (
   `id` int(11) NOT NULL primary key auto_increment,
@@ -86,6 +88,6 @@ CREATE TABLE `messages` (
   `time_submitted` datetime DEFAULT CURRENT_TIMESTAMP,
   foreign key (ticket_id) references tickets(id)
 );
-
+*/
 
 	

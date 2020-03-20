@@ -9,6 +9,7 @@
             <h3>Respond to Ticket #{{session.get('ticket_id')}}</h3>
             <p>User's Email: </p>
             <p>Problem Statement: </p>
+            <p>Category: </p>
         </div>
         <div class="col-md-6 text-right">
             <button class="btn btn-default">
@@ -17,6 +18,9 @@
             </button>
         </div>
     </div>
+    {% for error in form.msg.errors %}
+        {{ error }}
+    {% endfor %}
 
     {% for comment in msgs %}
       <div class="cm-style">
@@ -27,9 +31,8 @@
                 <p>Message: {{comment[3]}} | Ticket ID: {{comment[2]}}</p>
             </div>
             <div class="icons">
-                <i class="fa fa-trash" aria-hidden="true"></i>
                 <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <i class="fa fa-trash" aria-hidden="true"></i>
             </div>
           </div>
        </div>
@@ -37,9 +40,9 @@
 
     <form method="post" class="fixed-bottom">
         <div class="input-group sender-style">
-            <input type="text" name="msg" class="form-control" id="send-msg" placeholder="Enter you message here..." required>
+            {{ form.msg(class_="form-control", id_="send-msg", placeholder="Enter you message here...") }}
             <span class="input-group-btn">
-                <button type="submit" class="btn btn-primary" type="button">Send Message</button>
+                {{ form.submit(class_="btn btn-primary") }}
             </span>
         </div>
     </form>

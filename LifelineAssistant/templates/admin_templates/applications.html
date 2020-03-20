@@ -10,7 +10,6 @@
       <h4>Application Management Console</h4>
       <p class="text-right">Current User: {{session['email']}}</p>
     </div>
-    <!-- TODO: include logged on user's name -->
     <form action="{{url_for('.process_apps')}}" method="POST" id="apps">
       <nav class="navbar navbar-dark bg-dark">
         <!-- Container for Accept & Deny Buttons -->
@@ -35,7 +34,7 @@
           <!-- Search field and search button -->
           <input class="form-control mr-sm-2"
           type="search" name="zip"
-          placeholder="Search" aria-label="Search">
+          placeholder="Search Anything" aria-label="Search">
 
           <button name="search-btn" type="submit"
           class="btn btn-outline-success my-2 my-sm-0">Search
@@ -47,8 +46,8 @@
           <tr>
             <th scope="col"></th>
             <th scope="col">Status</th>
-            <th scope="col">Applicant</th>
-            <th scope="col">Email</th>
+            <th scope="col">Applicant Name</th>
+            <th scope="col">Applicant Email</th>
             <th scope="col">Zip Code</th>
             <th scope="col">Submit Datetime</th>
           </tr>

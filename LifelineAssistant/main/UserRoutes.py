@@ -36,7 +36,7 @@ def submit_ticket():
     ticket_id = get_ticket_fk(ticket)
     return redirect(url_for('.messenger', ticket_id=ticket_id))
 
-# TODO: would be nice to access this method in both UserRoutes and AdminRoutes
+
 def get_ticket_fk(ticket):
     """
     Helper method for submit_ticket & start_messenger,
@@ -58,7 +58,6 @@ def messenger(ticket_id):
     # add data related to given ticket
     if request.method == "POST":
         msg = request.form['msg']
-        # change ticket_id to sql select statement output
         sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
         values = [sender, ticket_id, msg]
         curs.execute(sql, values)
@@ -118,7 +117,7 @@ def register():
     return render_template("register.html")
 
 
-# User authentication function
+# TODO: ALLOW USERS TO MAKE MISTAKES WHEN ENTERING CREDENTIALS
 @main.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
