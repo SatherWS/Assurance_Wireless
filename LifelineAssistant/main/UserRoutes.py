@@ -22,7 +22,6 @@ def new_ticket():
         form.title.data = session.get('ticket', '')
     return render_template("help_center/create-ticket.html", form=form)
 
-
 @main.route('/submit-ticket')
 def submit_ticket():
     """ Adds ticket to database redirects to comments section """
@@ -36,7 +35,6 @@ def submit_ticket():
     ticket_id = get_ticket_fk(ticket)
     return redirect(url_for('.messenger', ticket_id=ticket_id))
 
-
 def get_ticket_fk(ticket):
     """
     Helper method for submit_ticket & start_messenger,
@@ -49,20 +47,18 @@ def get_ticket_fk(ticket):
     mysql.commit()
     return rt[1]
 
-
 @main.route('/messaging/<ticket_id>', methods=['POST', 'GET'])
 def messenger(ticket_id):
     curs = mysql.cursor()
     sender = session.get('chat-email')
-    ticket = session.get('ticket')
-    # add data related to given ticket
+    # add message to selected ticket
     if request.method == "POST":
         msg = request.form['msg']
         sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
         values = [sender, ticket_id, msg]
         curs.execute(sql, values)
     mysql.commit()
-    # display data
+    # display messages in ticket
     sql = "select * from support_messages where ticket_id = %s order by time_submitted desc"
     curs.execute(sql, [ticket_id])
     msgs = []
@@ -70,7 +66,6 @@ def messenger(ticket_id):
         msgs.append(row)
     mysql.commit()
     return render_template('help_center/comment.html', msgs=msgs)
-
 
 # TODO/REFACTOR: SEPARATE INTO TWO METHODS
 @main.route('/register', methods=['GET', 'POST'])
@@ -116,7 +111,6 @@ def register():
         return redirect(url_for("main.home"))
     return render_template("register.html")
 
-
 # TODO: ALLOW USERS TO MAKE MISTAKES WHEN ENTERING CREDENTIALS
 @main.route("/login", methods=['GET', 'POST'])
 def login():
@@ -139,7 +133,6 @@ def login():
             return redirect(url_for("main.show_status"))
     else:
         return render_template("home.html")
-
 
 # Kills current user's session
 @main.route("/logout")
@@ -170,59 +163,13 @@ def show_status():
 def home():
     return render_template("home.html")
 
-
 # Stores landing page draft
 @main.route("/about/")
 def about():
     return render_template("about.html")
 
-
 # Should contain team member info for potential employers
 @main.route("/contact/")
 def contact():
     return render_template("contact.html")
-
-
-
-# LEGACY CODE FROM REAL-TIME CHAT FEATURE v
-"""
-To mess-around with this code's functionality navigate
-to 127.0.0.1:5000/support 
-"""
-@main.route("/support", methods=['GET', 'POST'])
-def support():
-    """Login form to enter a room."""
-    form = TicketForm()
-    if form.validate_on_submit():
-        session['nonuser_email'] = form.nonuser_email.data
-        session['room'] = form.room.data
-        return redirect(url_for('.create_ticket'))
-    elif request.method == 'GET':
-        form.nonuser_email.data = session.get('nonuser_email', '')
-        form.room.data = session.get('room', '')
-    return render_template("support.html", form=form)
-
-@main.route('/create-ticket')
-def create_ticket():
-    room = session.get('room')
-    user = session.get('nonuser_email')
-    curs = mysql.cursor()
-    # SQL block adds ticket to db
-    sql = "insert into tickets(title, requester) values (%s, %s)"
-    values = [room, user]
-    curs.execute(sql, values)
-    mysql.commit()
-    return redirect(url_for('.chat'))
-
-@main.route('/chat')
-def chat():
-    """Chat room. The user's name and room must be stored in
-    the session."""
-    email = session.get('nonuser_email', '')
-    room = session.get('nonuser_email', '')
-    if email == '' or room == '':
-        return redirect(url_for('.support'))
-    return render_template('chat.html', email=email, room=room)
-# END LEGACY CODE FROM REAL-TIME CHAT FEATURE ^
-
 

@@ -22,39 +22,37 @@ def show_apps():
 # Modify application status
 @main.route("/process_apps", methods=['GET', 'POST'])
 def process_apps():
-    if session['admin']:
-        if request.method == "POST":
-            if "search-btn" in request.form:
-                if request.form.get('filter') == 'All':
-                    return show_apps()
-                curs = mysql.cursor()
-                sql = """select appid, status, fname, lname, 
-                applicant_email, zipcode, created from applications
-                where status = %s"""
-                value = [request.form.get('filter')]
-                curs.execute(sql, value)
-                mysql.commit()
-                apps = []
-                for row in curs:
-                    apps.append(row)
-                return render_template("admin_templates/applications.html", apps=apps)
-
-            # TODO: POSSIBLY SEPARATE THIS FUNCTION
-            elif "submit_btn" in request.form:
-                curs = mysql.cursor()
-                apps = request.form.getlist("selected[]")
-                # set status variable to value of accept or deny button
-                status = request.form["submit_btn"]
-                for i in apps:
-                    sql = "update applications set status = %s where appid = %s"
-                    values = (status, i)
-                    curs.execute(sql, values)
-                    mysql.commit()
+    if session['admin'] and request.method == "POST":
+        if "search-btn" in request.form:
+            if request.form.get('filter') == 'All':
                 return show_apps()
+            curs = mysql.cursor()
+            sql = """select appid, status, fname, lname, 
+            applicant_email, zipcode, created from applications
+            where status = %s"""
+            value = [request.form.get('filter')]
+            curs.execute(sql, value)
+            mysql.commit()
+            apps = []
+            for row in curs:
+                apps.append(row)
+            return render_template("admin_templates/applications.html", apps=apps)
+
+        # TODO: POSSIBLY SEPARATE THIS FUNCTION
+        elif "submit_btn" in request.form:
+            curs = mysql.cursor()
+            apps = request.form.getlist("selected[]")
+            # set status variable to value of accept or deny button
+            status = request.form["submit_btn"]
+            for i in apps:
+                sql = "update applications set status = %s where appid = %s"
+                values = (status, i)
+                curs.execute(sql, values)
+                mysql.commit()
+            return show_apps()
         return render_template("admin_templates/applications.html")
 
-
-@main.route('/comment-queue')
+@main.route('/comment-queue', methods=['POST', 'GET'])
 def show_tickets():
     if session['admin']:
         curs = mysql.cursor()
@@ -65,16 +63,32 @@ def show_tickets():
         for row in curs:
             tickets.append(row)
         mysql.commit()
+        if request.method == 'POST':
+            ticket_id = request.form.get('tkt')
+            return redirect(url_for('.select_ticket', ticket_id=ticket_id))
         return render_template('admin_templates/comment-queue.html', tickets=tickets)
 
+def get_ticket_info(ticket_id):
+    curs = mysql.cursor()
+    sql = 'select * from support_tickets where id = %s'
+    curs.execute(sql, [ticket_id])
+    rs = curs.fetchone()
+    mysql.commit()
+    return rs
 
-@main.route('/select-ticket', methods=['POST', 'GET'])
-def select_ticket():
-    if session['admin'] and request.method == 'POST':
+@main.route('/select-ticket/<ticket_id>', methods=['POST', 'GET'])
+def select_ticket(ticket_id):
+    if session['admin']:
         curs = mysql.cursor()
-        ticket_id = session['ticket_id']
         sender = session.get('email')
-        # displays data in responder's view
+        # add message to selected ticket
+        if request.method == "POST":
+            msg = request.form['msg']
+            sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
+            values = [sender, ticket_id, msg]
+            curs.execute(sql, values)
+        mysql.commit()
+        # displays messages in employee responder's viewS
         sql = "select * from support_messages where ticket_id = %s order by time_submitted desc"
         curs.execute(sql, [ticket_id])
         msgs = []
@@ -82,30 +96,8 @@ def select_ticket():
             msgs.append(row)
         mysql.commit()
 
-        form = MessageForm()
-        msg = form.msg.data
-        sql = "insert into support_messages (sender_email, ticket_id, msg) values (%s, %s, %s)"
-        values = [sender, ticket_id, msg]
-        curs.execute(sql, values)
-        mysql.commit()
-        return render_template('admin_templates/ticket-response.html', msgs=msgs, form=form)
-
-def send_message(ticket_id):
-    pass
-
-# Show all tickets in the queue -- OLD CHAT QUEUE FOR REAL-TIME MESSAGING D/N WORK
-@main.route("/queue")
-def chat_queue():
-    if session['admin']:
-        curs = mysql.cursor()
-        sql = """select id, title, requester, acceptor, time_created 
-            from tickets order by time_created asc"""
-        curs.execute(sql)
-        tickets = []
-        for row in curs:
-            tickets.append(row)
-        mysql.commit()
-    return render_template("admin_templates/queue.html", tickets=tickets)
+        tkt_info = get_ticket_info(ticket_id)
+        return render_template('admin_templates/ticket-response.html', msgs=msgs, tkt_info=tkt_info)
 
 
 

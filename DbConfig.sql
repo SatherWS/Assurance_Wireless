@@ -8,7 +8,7 @@ drop table if exists users;
 drop table if exists messages;
 drop table if exists tickets;
 
--- Re-populates data
+-- Re-populates data -------------------------------------------------------------
 create table if not exists users (
 	userid int primary key not null auto_increment,
 	fname varchar(50),
@@ -21,11 +21,11 @@ create table if not exists users (
 	created datetime default current_timestamp
 );
 
--- create admin user
+-- create admin user ---------------------------------------------------------------
 insert into users(fname, lname, email, password, ssn, dob, admin) values 
 ('admin', 'user', 'admin','asdf', '123412344', curdate(), 'y');
 
--- create standard users
+-- create standard users ------------------------------------------------------------
 insert into users(fname, lname, email, password, ssn, dob) values 
 ('Jesus', 'Smith', 'user1', 'asdf', '111122222', curdate()),
 ('John', 'Johnson', 'user2', 'asdf', '111122223', curdate()),
@@ -48,8 +48,7 @@ create table if not exists applications (
 	foreign key(applicant_email) references users(email)
 );
 
-
--- create applications
+-- create applications ---------------------------------------------------------------
 insert into applications
 (applicant_email, fname, lname, language, zipcode, street, city, state) values 
 ('user1', 'user1', 'smith', 'English', '85002', '123 Streetname', 'Phoenix', 'AZ'),
@@ -57,8 +56,7 @@ insert into applications
 ('user3', 'user3', 'Stevens', 'English', '85002', '125 Streetname', 'Phoenix', 'AZ'),
 ('user4', 'user4', 'Lastname', 'English', '85002', '126 Streetname', 'Phoenix', 'AZ');
 
-
--- Reference table for application processing
+-- Reference table for application processing ------------------------------------------
 create table if not exists comments (
 	commentid int primary key not null auto_increment,
 	body varchar(40) not null,
@@ -68,26 +66,24 @@ create table if not exists comments (
 	foreign key (appid) references applications(appid)
 );
 
-/*
-
--- Chat room tables
-CREATE TABLE `tickets` (
-  `id` int(11) NOT NULL primary key auto_increment,
+-- Support Tickets Section ---------------------------------------------------------------
+CREATE TABLE `support_tickets` (
+  `id` int(11) NOT NULL,
   `title` varchar(75) NOT NULL,
-  `requester` varchar(30) NOT NULL,
-  `acceptor` varchar(75) DEFAULT NULL,
-  `status` varchar(30) DEFAULT 'Open' NOT NULL, -- NOT ACCOUNTED FOR
+  `requester` varchar(40) NOT NULL,
+  `category` varchar(30) NOT NULL,
+  `acceptor` varchar(40) DEFAULT NULL,
+  `status` varchar(25) DEFAULT 'open',
   `time_created` datetime DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE `messages` (
-  `id` int(11) NOT NULL primary key auto_increment,
-  `client_email` varchar(75) NOT NULL,
+CREATE TABLE `support_messages` (
+  `id` int(11) NOT NULL,
+  `sender_email` varchar(75) NOT NULL,
   `ticket_id` int(11) NOT NULL,
-  `msg` varchar(50) NOT NULL,
-  `time_submitted` datetime DEFAULT CURRENT_TIMESTAMP,
-  foreign key (ticket_id) references tickets(id)
+  `msg` varchar(100) NOT NULL,
+  `time_submitted` datetime DEFAULT CURRENT_TIMESTAMP
 );
-*/
+
 
 	

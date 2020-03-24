@@ -6,10 +6,12 @@
 <div class="container nav-spacing">
     <div class="row">
         <div class="col-md-6">
-            <h3>Respond to Ticket #{{session.get('ticket_id')}}</h3>
-            <p>User's Email: </p>
-            <p>Problem Statement: </p>
-            <p>Category: </p>
+            <h3>Summary for Ticket #{{tkt_info[0]}}</h3>
+            <ul>
+                <li>Problem Statement: {{tkt_info[1]}}</li>
+                <li>User's Email: {{tkt_info[2]}}</li>
+                <li>Category: </li>
+            </ul>
         </div>
         <div class="col-md-6 text-right">
             <button class="btn btn-default">
@@ -18,9 +20,6 @@
             </button>
         </div>
     </div>
-    {% for error in form.msg.errors %}
-        {{ error }}
-    {% endfor %}
 
     {% for comment in msgs %}
       <div class="cm-style">
@@ -28,7 +27,7 @@
             <div>
                 <small>{{comment[4]}}</small>
                 <p><strong id="mb-0">{{comment[1]}}</strong></p>
-                <p>Message: {{comment[3]}} | Ticket ID: {{comment[2]}}</p>
+                <p>Message: {{comment[3]}}</p>
             </div>
             <div class="icons">
                 <i class="fa fa-pencil-square" aria-hidden="true"></i>
@@ -40,9 +39,9 @@
 
     <form method="post" class="fixed-bottom">
         <div class="input-group sender-style">
-            {{ form.msg(class_="form-control", id_="send-msg", placeholder="Enter you message here...") }}
+            <input type="text" name="msg" class="form-control" id="send-msg" placeholder="Enter you message here..." required>
             <span class="input-group-btn">
-                {{ form.submit(class_="btn btn-primary") }}
+                <button type="submit" class="btn btn-primary" type="button">Send Message</button>
             </span>
         </div>
     </form>
