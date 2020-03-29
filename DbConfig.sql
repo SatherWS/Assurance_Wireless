@@ -18,7 +18,7 @@ create table users (
 	fname varchar(50),
 	lname varchar(50),
 	email varchar(75) unique not null,
-	password varchar(25) not null,
+	password varchar(150) not null,
 	ssn char(4) not null,
 	dob date not null,
 	admin char(1) default 'n' not null,
