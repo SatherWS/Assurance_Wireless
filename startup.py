@@ -1,7 +1,6 @@
-#!/bin/env python
-from LifelineAssistant import createApp, socketio
+from LifelineAssistant import createApp
 
 app = createApp(debug=True)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    app.run()

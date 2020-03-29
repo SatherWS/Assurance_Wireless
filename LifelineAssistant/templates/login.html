@@ -2,22 +2,22 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class="col-md-10"></div>
-        <div class="col-md-4">
+        <div class="col-md-4 nav-spacing">
         <!-- Login Form -->
         <div class="login-modal">
-            <h3>Welcome Back</h3>
+            <h2>Welcome Back</h2>
             <form action="/login" method="post">
                 <input id="email_field" name="username" type="text" placeholder="Enter Email" class="form-control"/>
                 <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" />
-                <p>Have you applied for Lifeline services? If not Sign up <a href="{{ url_for('main.register') }}">here</a></p>
-                <input type="submit" value="Sign In" class="btn btn-success" />
+                <p>Don't have an account? Apply <a href="{{ url_for('main.register') }}">here</a></p>
+                <input type="submit" value="Sign In" class="btn btn-primary form-control" />
                 <!-- Error message here [NOT IMPLEMENTED]-->
                 {% if msg %}
                     <p>{{ msg }}</p>
                 {% endif %}
             </form>
         </div>
+            <div class="col-md-8"></div>
         </div>
     </div>
 </div>

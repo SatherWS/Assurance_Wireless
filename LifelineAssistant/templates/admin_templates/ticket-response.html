@@ -1,0 +1,66 @@
+{% extends "_layout.html" %}
+{% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+{% block content %}
+<div class="container nav-spacing">
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Ticket #{{tkt_info[0]}}</h3>
+            <h5>Status: {{tkt_info[5]}}</h5>
+            <h5> Taken by {{tkt_info[4]}}</h5>
+            <ul>
+                <li>Problem Statement: {{tkt_info[1]}}</li>
+                <li>User's Email: {{tkt_info[2]}}</li>
+                <li>Category: {{tkt_info[3]}}</li>
+            </ul>
+        </div>
+        <div class="col-md-6 ticket-actions">
+            <form action="{{ url_for('main.message_action') }}" method="post">
+                <button type="submit" name="take-ticket" class="btn btn-primary">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Take Ticket
+                </button>
+                <button type="submit" name="download" class="btn btn-default">
+                    <i class="fa fa-download" aria-hidden="true"></i>
+                    Download Chat Log
+                </button>
+            </form>
+        </div>
+    </div>
+    <!-- show messages in #display_info -->
+    <div id="display_info"></div>
+    <form method="post" class="fixed-bottom">
+        <div class="input-group sender-style">
+            <input type="text" name="msg" class="form-control" id="send-msg" placeholder="Enter you message here..." required>
+            <span class="input-group-btn">
+                <button type="submit" class="btn btn-primary" type="button">Send Message</button>
+            </span>
+        </div>
+    </form>
+</div>
+
+{% endblock %}
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    // In flask app change user_name to session variable
+    function loaddata() {
+        $.ajax({
+            url: "{{ url_for('main.show_data') }}",
+            success: function (response) {
+                $('#display_info').html(response);
+            }
+        });
+        // recursive call to set timeout function
+        setTimeout(loaddata, 1000);
+    }
+    loaddata();
+</script>
+<script>
+    // prevents duplicate comments on refresh
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+{% endblock %}

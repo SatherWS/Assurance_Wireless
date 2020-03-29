@@ -1,22 +1,3 @@
-/* Test Landing Page - about.html */
-.img-bg2 {
-    background-image: url("imgs/align-left-bg.jpg");
-    height: 100vh;
-    background-repeat: no-repeat;
-    background-position-x: 105%;
-    /*
-    background-position-y: -140%;
-    */
-}
-.hero-div {
-    display: table; 
-    height: 65vh; 
-    overflow: hidden;
-}
-.hero-elements {
-    display: table-cell; 
-    vertical-align: middle;
-}
 /*
 Assurance Wireless Colors
 #00AEEF - blue
@@ -26,6 +7,31 @@ Assurance Wireless Colors
 #D62025 - Virgin Moblie red
 */
 
+/* should only show on mobile and tablets */
+/*
+.hero-div {
+    display: table;
+    width: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(255,255,255,0.5); 
+}
+*/
+.hero-div {
+    display: table;
+    width: 100vh;
+    height: 90vh;
+    overflow: hidden;
+}
+.hero-elements {
+    display: table-cell; 
+    vertical-align: middle;
+}
+
+/* provides space for fixed nav */
+.nav-spacing {
+    margin-top: 2.5rem;
+}
 body {
     padding-top: 85px;
     padding-bottom: 20px;
@@ -45,43 +51,12 @@ body {
     margin-right: 10px;
 }
 
-/*
-DELETE OLD LANDING PAGE
-
-.landing-area {
-    left: 0;
-    top: 0;
-    -webkit-clip-path: polygon(0 0, 100% 0%, 50% 100%, 0% 100%);
-    clip-path: polygon(0 0, 100% 0%, 70% 0%, 0% 100%); 
-    height: 90vh;
-    background-image: url("imgs/landing-img.jpg");
-    background-position: 20%;
+.img-bg2 {
+    background-image: url("imgs/align-left-bg.jpg");
+    height: 100vh;
     background-repeat: no-repeat;
+    background-position-x: 105%;
 }
-
-
-.landing-content {
-    z-index: 1;
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 60%;
-    text-align: right;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-}
-    .landing-content h1 {
-        font-size: 32pt;
-    }
-    .landing-content p {
-        font-size: 18pt;
-    }
-    .landing-content a {
-        font-size: 16pt;
-        color: #fff!important;
-        
-    }
-*/
 
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
@@ -90,12 +65,8 @@ DELETE OLD LANDING PAGE
     padding-right: 15px;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
 
-/* Login & Signup */
+/* Login & Signup ************************************************************************/
 .btn-box {
     margin-top: 1rem;
 }
@@ -116,51 +87,22 @@ DELETE OLD LANDING PAGE
     padding-top: 2rem;
 }
 
-.modal-content {
-    background: #f1f1f1;
+.modal-footer button {
+    color: #D62025;
+    text-shadow: none;
 }
 
-.modal-header {
-    border: none;
+/* Registration Section ****************************************************************************/
+.reg-style {
+    background: #dedcdc;
 }
-
-.modal-footer {
-    border: none;
-}
-
-    .modal-footer button {
-        color: #D62025;
-        text-shadow: none;
-        font-size: 20pt;
-    }
-
-/* register.html */
 .reg-head {
     margin-top:1.25rem;
 }
 .su {
-    margin-top:1rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
-
-/*Bootstrap Login Modal*/
-.login-modal {
-    padding-top: 0.7rem;
-}
-
-    .login-modal input {
-        margin-top: 1rem;
-        padding: .5rem;
-        border-radius: .45rem;
-    }
-
-    .login-modal p {
-        padding-top: 0.7rem;
-        padding-bottom: 0;
-    }
-
-    .login-modal a {
-        margin-bottom: 1rem;
-    }
 
 .verify-bg {
     background: #2daeff;
@@ -178,7 +120,7 @@ DELETE OLD LANDING PAGE
     color: #fff!important;
 }
 
-/* Applicant status page */
+/* Applicant status page *********************************************************************/
 .cstm-card {
     margin-top:1.5rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -205,17 +147,97 @@ span.badge.badge-light.badge-top {
     border: solid #000 2px;
 }
 
-/* Chat Room Styles */
-.ticket-style {
-    margin-top: 2.2rem;
+/* Ticket Comments New Feature *****************************************************************/
+.ticket-actions {
+    text-align: right;
+}
+@media only screen and (max-width: 700px) {
+    .ticket-actions {
+        text-align: left;
+    }
+}
+.fixed-bottom {
+    padding: .5rem 4rem;
+    background: #800f69;
 }
 
-/* Admin Panel -- Application Management */
+.cm-style {
+    border-bottom: solid 1px #dadee0;
+    padding: 1rem 0;
+}
+
+#send-msg {
+    margin-right: 1rem;
+    border-radius: .6rem;
+}
+
+.option-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+.icons {
+    font-size: 16pt;
+    text-align: right;
+}
+
+.fa {
+    margin-right: 0.5rem;
+}
+
+/* Admin Console **************************************************************************/
+.app-mngr-box {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Chat Room Styles Old Feature ************************************************************/
+#chat {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.chat-style {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#text {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.msg-container {
+    padding-left: 0;
+}
+.ticket-title {
+    margin-top: 3rem;
+}
+.ticket-title h1 {
+    padding-bottom: 1rem;
+}
+
+
+/* Login Form ******************************************************************************/
+/*Bootstrap Login Modal HTML IS DELETED*/
+.login-modal {
+    padding-top: 0.7rem;
+}
+
+.login-modal input {
+    margin-top: 1rem;
+    padding: .5rem;
+    border-radius: .45rem;
+}
+
+.login-modal p {
+    padding-top: 0.7rem;
+    padding-bottom: 0;
+}
+
+.login-modal a {
+    margin-bottom: 1rem;
+}
+/* Admin Panel -- Application Management ****************************************************************/
 .bg-dark {
     background:transparent!important;
     padding: .5rem 0;
 }
-/*also any normal link */
+/* can delete am-title, use nav-spacing instead */
 .am-title {
     padding: 1.2rem 0;
     margin-bottom: 0;
@@ -223,7 +245,21 @@ span.badge.badge-light.badge-top {
 .chkBox {
     padding: .5rem;
 }
-/* Copywrite footer */
+.choices {
+    margin-top: 2rem;
+}
+
+/* Home Page & Features Section ********************************************************************/
+/* icons */
+.home-icon-area img {
+    height: 75px;
+    width: 75px;
+    margin-right: 15px;
+    float: left;
+    margin-bottom: 20px;
+}
+
+/* Copyright footer */
 footer {
     text-align: center;
 }

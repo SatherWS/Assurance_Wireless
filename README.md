@@ -49,14 +49,5 @@ mysql = MySQLdb.connect(host='localhost', user='YOUR-USERNAME', passwd='YOUR-PAS
 
 ## Running the app 
 1) **Run ampps.** Install it if you don't have it. No additional setup is required as long as it's installed on your computer.
-2) **Setup Database** in a mysql shell run the command `source C:/path/to/Assurance_Wireless/DbConfig.sql`. If you skip this step the project will crash.
-3) **Run startup.py** This script is the launching point of the entire application
-
-## TODO:
-* Function `register()` in line 22 of `LifelineAssistant/__init__.py` needs to be split in two
-* Use Email Validation API to prevent users from entering non-existent email addresses - *Medium Importantce*
-  * https://pypi.org/project/email-verifier/
-* Mimic existing zip code API to generate the city and state that belongs to an inputed zip code - *Low Importance*
-* Re-use content of original website to better describe Assurance Wireless's products and services - *Medium Importantce*
 
 
