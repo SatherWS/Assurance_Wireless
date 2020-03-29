@@ -9,6 +9,7 @@
                 <th scope="col">Status</th>
                 <th scope="col" colspan="2">Question</th>
                 <th scope="col">Inquirer</th>
+                <th scope="col">Acceptor</th>
                 <th scope="col">Time</th>
             </tr>
         </thead>
@@ -18,13 +19,11 @@
                 <th scope="row">
                     <input type="submit" value="{{ row[0] }}" name="tkt">
                 </th>
-                {% if row[3] != None %}
-                    <td id="status">closed</td>
-                {% endif %}
-                <td id="status2">open</td>
-                <td colspan="2">{{ row[1] }}</td>
-                <td>{{ row[2] }}</td>
+                <td>{{ row[1] }}</td>
+                <td colspan="2">{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
                 <td>{{ row[4] }}</td>
+                <td>{{ row[5] }}</td>
             </tr>
         {% endfor %}
         </tbody>

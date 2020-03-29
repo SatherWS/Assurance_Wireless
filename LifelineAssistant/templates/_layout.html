@@ -1,14 +1,15 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Assurance Wireless</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
-    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
-    crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}"/>
-    {% block head %} {% endblock %}
+    {% block head %}
+        <title>Assurance Wireless</title>
+    {% endblock %}
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
@@ -19,46 +20,46 @@
                 data-toggle="collapse" data-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
 
-          <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>
         </button>
-        
+
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.new_ticket') }}">Support Chat</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.about') }}">About Us</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('main.contact') }}">Contact Us</a>
-            </li>
-          </ul>
-          <div class="form-inline my-2 my-lg-0">
-          <!-- Admin user buttons -->
-            {% if session['admin'] %}
+            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.new_ticket') }}">Support Chat</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.map') }}">Coverage Map</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('main.contact') }}">Contact Us</a>
+                </li>
+            </ul>
+            <div class="form-inline my-2 my-lg-0">
+                <!-- Admin user buttons -->
+                {% if session['admin'] %}
                 <a class="btn btn-secondary lb" type="button"
                    href="{{ url_for('main.show_tickets') }}">
-                   Support Queue
+                    Support Queue
                 </a>
                 <a class="btn btn-secondary lb" type="button"
                    href="{{ url_for('main.show_apps') }}">
-                   Application Manager
+                    Application Manager
                 </a>
                 <a class="btn cstm-btn" href="{{ url_for('main.logout') }}">Log Out</a>
 
-           <!-- Logged in user buttons -->
-            {% elif session['email'] %}
+                <!-- Logged in user buttons -->
+                {% elif session['email'] %}
                 <a class="btn btn-secondary lb" href="{{ url_for('main.show_status') }}">Application Status</a>
                 <a class="btn cstm-btn" href="/logout">Log Out</a>
-            <!-- Non-Logged in user buttons -->
-            {% else %}
+                <!-- Non-Logged in user buttons -->
+                {% else %}
                 <a class="btn btn-primary lb" href="{{ url_for('main.register') }}">Apply Today</a>
                 <a class="btn cstm-btn" href="{{ url_for('main.login') }}">Log In</a>
-            {% endif %}
-          </div>
+                {% endif %}
+            </div>
         </div>
-      </nav>
+    </nav>
 
     <!-- Dynamic Content Here-->
     {% block content %}
@@ -71,9 +72,8 @@
             <p>&copy; 2020 - Assurance Wireless </p>
         </footer>
     </div>
-    {% block js %}
-    {% endblock %}
-    <!--
+
+    <!-- External CDN References
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
@@ -81,5 +81,7 @@
     <script src="{{url_for('static', filename='js/jquery.js')}}"></script>
     <script src="{{url_for('static', filename='js/popper.js')}}"></script>
     <script src="{{url_for('static', filename='js/bootstrap.js')}}"></script>
+    {% block js %}
+    {% endblock %}
 </body>
 </html>

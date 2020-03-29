@@ -1,13 +1,3 @@
-
-.hero-div {
-    display: table; 
-    height: 65vh; 
-    overflow: hidden;
-}
-.hero-elements {
-    display: table-cell; 
-    vertical-align: middle;
-}
 /*
 Assurance Wireless Colors
 #00AEEF - blue
@@ -16,6 +6,27 @@ Assurance Wireless Colors
 #800F69 - purple
 #D62025 - Virgin Moblie red
 */
+
+/* should only show on mobile and tablets */
+/*
+.hero-div {
+    display: table;
+    width: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    background: rgba(255,255,255,0.5); 
+}
+*/
+.hero-div {
+    display: table;
+    width: 100vh;
+    height: 90vh;
+    overflow: hidden;
+}
+.hero-elements {
+    display: table-cell; 
+    vertical-align: middle;
+}
 
 /* provides space for fixed nav */
 .nav-spacing {
@@ -76,30 +87,21 @@ body {
     padding-top: 2rem;
 }
 
-.modal-content {
-    background: #f1f1f1;
+.modal-footer button {
+    color: #D62025;
+    text-shadow: none;
 }
 
-.modal-header {
-    border: none;
+/* Registration Section ****************************************************************************/
+.reg-style {
+    background: #dedcdc;
 }
-
-.modal-footer {
-    border: none;
-}
-
-    .modal-footer button {
-        color: #D62025;
-        text-shadow: none;
-        font-size: 20pt;
-    }
-
-/* register.html ****************************************************************************/
 .reg-head {
     margin-top:1.25rem;
 }
 .su {
-    margin-top:1rem;
+    margin-top: 1rem;
+    margin-bottom: 0;
 }
 
 .verify-bg {
@@ -146,6 +148,14 @@ span.badge.badge-light.badge-top {
 }
 
 /* Ticket Comments New Feature *****************************************************************/
+.ticket-actions {
+    text-align: right;
+}
+@media only screen and (max-width: 700px) {
+    .ticket-actions {
+        text-align: left;
+    }
+}
 .fixed-bottom {
     padding: .5rem 4rem;
     background: #800f69;
@@ -168,6 +178,7 @@ span.badge.badge-light.badge-top {
 
 .icons {
     font-size: 16pt;
+    text-align: right;
 }
 
 .fa {
@@ -226,7 +237,7 @@ span.badge.badge-light.badge-top {
     background:transparent!important;
     padding: .5rem 0;
 }
-/*also any normal link */
+/* can delete am-title, use nav-spacing instead */
 .am-title {
     padding: 1.2rem 0;
     margin-bottom: 0;
@@ -234,7 +245,9 @@ span.badge.badge-light.badge-top {
 .chkBox {
     padding: .5rem;
 }
-
+.choices {
+    margin-top: 2rem;
+}
 
 /* Home Page & Features Section ********************************************************************/
 /* icons */

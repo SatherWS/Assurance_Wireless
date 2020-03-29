@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\LifelineAssistant",
+    "\\LifelineAssistant\\main",
+    "\\LifelineAssistant\\static",
+    "\\LifelineAssistant\\templates",
+    "\\LifelineAssistant\\templates\\admin_templates",
+    "\\LifelineAssistant\\templates\\help_center"
+  ],
+  "SelectedNode": "\\startup.py",
+  "PreviewInSolutionExplorer": false
+}

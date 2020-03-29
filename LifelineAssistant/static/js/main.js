@@ -1,4 +1,4 @@
-
+/* REMOVE Socket IO API is no longer in use */
     var socket = io();
     $(document).ready(function() {
         socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
@@ -21,7 +21,6 @@
             $('#chat').val($('#chat').val() + data.msg + '\n');
             $('#chat').scrollTop($('#chat')[0].scrollHeight);
         });
-
 
         $('#text').keypress(function(e) {
             var code = e.keyCode || e.which;
