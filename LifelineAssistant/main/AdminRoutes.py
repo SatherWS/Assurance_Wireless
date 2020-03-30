@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, redirect, url_for, session, Blueprint
+from flask import Flask, render_template, request, redirect, url_for, session, Blueprint, Response
 from flask_mysqldb import MySQL, MySQLdb
 from . import main
 from .Forms import MessageForm
-import datetime
+from datetime import datetime
 
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
 
@@ -10,9 +10,9 @@ mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_
 # Application Management Section                                           |
 # -------------------------------------------------------------------------+
 
-# shows all application data 
 @main.route("/applications")
 def show_apps():
+    """ shows all application data """
     if session['admin']:
         curs = mysql.cursor()
         sql = """select appid, status, fname, lname, 
@@ -25,9 +25,10 @@ def show_apps():
     return render_template("admin_templates/applications.html", apps=apps)
 
 
-# search by application status
+
 @main.route("/search-apps", methods=['POST','GET'])
 def search_apps():
+    """search by application status"""
     if session['admin'] and request.method == "POST":
         if request.form.get('filter') == 'All':
             return show_apps()
@@ -43,10 +44,18 @@ def search_apps():
             apps.append(row)
         return render_template("admin_templates/applications.html", apps=apps)
 
+def app_comments(app, reason):
+    """provide reason for accepting or denying applications"""
+    curs = mysql.cursor()
+    sql = "insert into comments(body, admin_email, applicant_email) values (%s, %s, %s)"
+    values = [reason, session.get('email'), app]
+    curs.execute(sql, values)
+    mysql.commit()
 
-# modify application data
+
 @main.route("/process_apps", methods=['GET', 'POST'])
 def process_apps():
+    """ modify application data """
     if session['admin'] and request.method == "POST":
         # search by status: accepted, denied, status
         if "search-btn" in request.form:
@@ -60,11 +69,13 @@ def process_apps():
             # set status variable to value of accept or deny button
             status = request.form["submit_btn"]
             for i in apps:
+                app_comments(i, request.form.get('reason'))
                 sql = "update applications set status = %s where applicant_email = %s"
                 values = (status, i)
                 curs.execute(sql, values)
                 mysql.commit()
-            return show_apps()  # change to confirmation modal
+            
+            return show_apps()  # get results from modal then redirect view
         return render_template("admin_templates/applications.html")
 
 # -------------------------------------------------------------------------+
@@ -149,14 +160,13 @@ def format_html(data):
     for row in data:
         html += open_div
         for x in row:
-            if isinstance(x, datetime.datetime):
+            if isinstance(x, datetime):
                 html += div_open_plain
                 html += '<small>' + str(x) + '</small>'
-
                 #if not from_admin(session.get('tkt')):
                 html += """<div class='icons'>
-                    <i class='fa fa-pencil-square' aria-hidden='true'></i>
-                    <i class='fa fa-trash' aria-hidden='true'></i>
+                    <i class='fa fa-pencil-square' aria-hidden='true'> edit</i>
+                    <i class='fa fa-trash' aria-hidden='true'> delete</i>
                 </div>"""
                 html += div_close_plain
             else:
@@ -170,17 +180,34 @@ def format_html(data):
         html += close_div
     return html
 
-@main.route('/show-data')
-def show_data():
+def get_data():
     curs = mysql.cursor()
     sql = """select sender_email, msg, time_submitted from support_messages 
     where ticket_id = %s order by time_submitted desc"""
     curs.execute(sql, [session.get('tkt')])
     mysql.commit()
-    msg_data = curs.fetchall()
+    return curs.fetchall()
+
+@main.route("/get-chat-log")
+def get_chat_log():
+    txt = get_data()
+    formatted_txt =  'Customer Support Chat Log \nTime Recorded '+str(datetime.now()) + '\n'
+    counter = len(txt)
+    for row in txt:
+        formatted_txt += '\nMessage #' + str(counter) + '\n'
+        for x in row:
+            if isinstance(x, datetime):
+                formatted_txt += str(x) + '\n'
+            else:    
+                formatted_txt += x + '\n'
+        counter -= 1
+    return Response (formatted_txt, mimetype="text/txt", headers={"Content-disposition": "attachment; filename=chat-log.txt"})
+
+@main.route('/show-data')
+def show_data():
+    msg_data = get_data()
     data = format_html(msg_data)
     return data
-
 
 # -------------------------------------------------------------------------+
 # Customer Support Respondent Section, Ticket Actions                      |

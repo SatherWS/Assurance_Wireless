@@ -160,9 +160,9 @@ def logout():
 # Application Status Section                                               |
 # -------------------------------------------------------------------------+
 
-# Displays application status for logged in customer
 @main.route("/status")
 def show_status():
+    """ Displays application status for logged in customer """
     if session['email']:
         curs = mysql.cursor()
         # SQL join statement grabs user's dob from applications table
@@ -179,19 +179,21 @@ def show_status():
 # -------------------------------------------------------------------------+
 # View Rendering Section                                                   |
 # -------------------------------------------------------------------------+
-
-# View functions for non logged in users
+ 
 @main.route("/")
 def home():
+    """ Load Homepage """
     return render_template("home.html")
 
-# Stores landing page draft
+
 @main.route("/map/")
 def map():
+    """ Stores landing page draft """
     return render_template("map.html")
 
-# Should contain team member info for potential employers
+
 @main.route("/contact/")
 def contact():
+    """ TODO: Describe project and leave developers contact information"""
     return render_template("contact.html")
 

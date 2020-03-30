@@ -21,10 +21,11 @@
                     <i class="fa fa-check" aria-hidden="true"></i>
                     Take Ticket
                 </button>
-                <button type="submit" name="download" class="btn btn-default">
+                <a href="{{url_for('main.get_chat_log')}}" 
+                        type="submit" name="download" class="btn btn-default">
                     <i class="fa fa-download" aria-hidden="true"></i>
                     Download Chat Log
-                </button>
+                </a>
             </form>
         </div>
     </div>

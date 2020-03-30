@@ -31,10 +31,10 @@ insert into users(fname, lname, email, password, ssn, dob, admin) values
 
 -- create standard users ----------------------------------------------------------------------
 insert into users(fname, lname, email, password, ssn, dob) values 
-('Jesus', 'Smith', 'user1', 'asdf', '1111', curdate()),
-('John', 'Johnson', 'user2', 'asdf', '1112', curdate()),
-('Steve', 'Stevens', 'user3', 'asdf', '2224', curdate()),
-('Firstname', 'Lastname', 'user4', 'asdf', '2225', curdate());
+('Jesus', 'Smith', 'user1@gmail.com', 'asdf', '1111', curdate()),
+('John', 'Johnson', 'user2@gmail.com', 'asdf', '1112', curdate()),
+('Steve', 'Stevens', 'user3@gmail.com', 'asdf', '2224', curdate()),
+('Firstname', 'Lastname', 'user4@gmail.com', 'asdf', '2225', curdate());
 
 -- APPLICATIONS SECTION ------------------------------------------------------------------------
 create table applications (
@@ -56,19 +56,20 @@ create table applications (
 -- create applications -------------------------------------------------------------------------
 insert into applications
 (applicant_email, fname, lname, language, zipcode, street, city, state) values 
-('user1', 'user1', 'smith', 'English', '85002', '123 Streetname', 'Phoenix', 'AZ'),
-('user2', 'user2', 'Johnson', 'English', '85002', '124 Streetname', 'Phoenix', 'AZ'),
-('user3', 'user3', 'Stevens', 'English', '85002', '125 Streetname', 'Phoenix', 'AZ'),
-('user4', 'user4', 'Lastname', 'English', '85002', '126 Streetname', 'Phoenix', 'AZ');
+('user1@gmail.com', 'Joe', 'Smith', 'English', '85002', '123 Streetname', 'Phoenix', 'AZ'),
+('user2@gmail.com', 'Dave', 'Johnson', 'English', '85002', '124 Streetname', 'Phoenix', 'AZ'),
+('user3@gmail.com', 'Steve', 'Stevens', 'English', '85002', '125 Streetname', 'Phoenix', 'AZ'),
+('user4@gmail.com', 'Brad', 'Ward', 'English', '85002', '126 Streetname', 'Phoenix', 'AZ');
 
 -- COMMENTS SECTION [NOT IMPLEMENTED 3/26/2020] -------------------------------------------------
 create table comments (
 	commentid int primary key not null auto_increment,
 	body varchar(40) not null,
-	userid int not null,
-	appid int not null,
-	foreign key (userid) references users(userid),
-	foreign key (appid) references applications(appid)
+	admin_email varchar(75) not null,
+	applicant_email varchar(75) not null,
+	time_changed datetime default current_timestamp,
+	foreign key (admin_email) references users(email),
+	foreign key (applicant_email) references applications(applicant_email)
 );
 
 -- SUPPORT TICKETS & MESSAGES SECTION ----------------------------------------------------------
