@@ -8,7 +8,7 @@
         <h4>Application Management Console</h4>
         <p class="text-right">Current User: {{session['email']}}</p>
     </div>
-    <form id="apps" action="{{url_for('.process_apps')}}" method="POST">
+    <form id="apps" action="{{ url_for('.process_apps') }}" method="POST">
         <nav class="navbar navbar-dark bg-dark">
             <!-- Container for Accept & Deny Buttons -->
             <div class="form-inline">
@@ -17,13 +17,13 @@
                 <button type="button" onclick="showAccepted()"
                         data-toggle="modal" data-target="#myModal"
                         class="btn btn-success mr-2">
-                        Accept
+                    Accept
                 </button>
 
                 <button type="button" onclick="showDenied()"
                         data-toggle="modal" data-target="#myModal"
                         class="btn btn-danger">
-                        Deny
+                    Deny
                 </button>
             </div>
 
@@ -72,35 +72,34 @@
                 {% endfor %}
             </tbody>
         </table>
-    </form>
-</div>
-
-<!-- Comment Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-     <form method="post">
-        <div class="modal-dialog modal-md">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Applications to <span id="decision"></span></h4>
-                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body" id="results">
-                    <div id="chosen"></div>
-                    <div class="choices">
-                        <select class="form-control" id="add-options">
-                        </select>
+        <!-- Comment Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Applications to <span id="decision"></span></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <div id="modal-submit">
-                        <a href="#" onclick="processApps()" type="submit" class="btn btn-success success">Confirm</a>
+                    <div class="modal-body" id="results">
+                        <div id="chosen"></div>
+                        <div class="choices">
+                            <select class="form-control" id="add-options" name="reason">
+                            </select>
+                        </div>
                     </div>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <div class="modal-footer">
+                        <div id="modal-submit">
+                            <a onclick="processApps()" class="btn btn-success success">Confirm</a>
+                        </div>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    </div>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+    
 {% endblock %}
 {% block js %}
 
@@ -120,39 +119,41 @@
     var choice = '';
 
     function showAccepted() {
+        choice = 'accept';
         var selects = getSelected();
         var display = document.getElementById("chosen");
         var add_options = document.getElementById("add-options");
         display.innerHTML = '';
         add_options.innerHTML = '';
+        add_options.innerHTML += "<option name=''>Qualifying tax bracket</option>";
+        add_options.innerHTML += "<option name=''>Has existing government assistance</option>";
+        add_options.innerHTML += "<option name=''>Approved for low cost services only</option>";
+
         for (var i = 0; i < selects.length; i++) {
             display.innerHTML += "<li>Applicant's Email: " + selects[i].value + '</li>';
-            add_options.innerHTML += "<option name=''>Qualifying tax bracket</option>";
-            add_options.innerHTML += "<option name=''>Has existing government assistance</option>";
-            add_options.innerHTML += "<option name=''>Approved for low cost services only</option>";
         }
         document.getElementById('decision').innerHTML = 'Accept';
-        choice = 'accept';
     }
 
     function showDenied() {
+        choice = 'deny'
         var selects = getSelected();
         var display = document.getElementById("chosen");
         var add_options = document.getElementById("add-options");
         display.innerHTML = '';
         add_options.innerHTML = '';
+        add_options.innerHTML += "<option name=''>Provided fradulant information</option>";
+        add_options.innerHTML += "<option name=''>Income level was too high</option>";
+        add_options.innerHTML += "<option name=''>Geographic location doesn't qualify</option>";
+
         for (var i = 0; i < selects.length; i++) {
             display.innerHTML += "<li>Applicant's Email: " + selects[i].value + '</li>';
-            add_options.innerHTML += "<option name=''>Provided fradulant information</option>";
-            add_options.innerHTML += "<option name=''>Income level was too high</option>";
-            add_options.innerHTML += "<option name=''>Geographic location doesn't qualify</option>";
         }
         document.getElementById("decision").innerHTML = 'Deny';
-        choice = 'deny'
     }
 
     function processApps() {
-        if (choice == 'accept')
+        if (choice == 'accept') 
             document.getElementById("accept").click();
         else
             document.getElementById("deny").click();

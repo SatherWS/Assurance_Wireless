@@ -8,6 +8,6 @@
     "\\LifelineAssistant\\templates\\admin_templates",
     "\\LifelineAssistant\\templates\\help_center"
   ],
-  "SelectedNode": "\\startup.py",
+  "SelectedNode": "\\LifelineAssistant\\templates\\register.html",
   "PreviewInSolutionExplorer": false
 }
