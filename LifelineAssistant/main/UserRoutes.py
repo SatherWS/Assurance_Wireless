@@ -77,7 +77,6 @@ def messenger(ticket_id):
 # User Authentication Section                                              |
 # -------------------------------------------------------------------------+
 
-# TODO: APPLY STRONG PASSWORD ENCRYPTION USING HASHLIB BEFORE ADDING TO DATABASE
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     """ Adds new entries to awla_db.user and awla.applications """
@@ -86,7 +85,7 @@ def register():
         fname = request.form['first']
         lname = request.form['last']
         email = request.form['email']
-        password = encrypt.get_cipher(request.form['password'])
+        password = encrypt.get_hash(request.form['password'])
         dob = request.form['dob']
         ssn = request.form['ssn']
         cur = mysql.cursor()
@@ -129,7 +128,6 @@ def add_application(app):
 
 
 # TODO: ALLOW USERS TO MAKE MISTAKES WHEN ENTERING CREDENTIALS
-# TODO: APPLY STRONGER PASSWORD ENCRYPTION THROUGH HASHLIB BEFORE ADDING TO DATABASE
 @main.route("/login", methods=['GET', 'POST'])
 def login():
 
@@ -139,22 +137,23 @@ def login():
         return render_template('login.html')
     elif request.method == "POST":
         uname = request.form['username']
-        password = encrypt.get_cipher(request.form['password'])
+        password = encrypt.get_hash(request.form['password'])
         cur = mysql.cursor()
         sql = "select * from users where email=%s AND password=%s"
         cur.execute(sql, (uname, password))
         user = cur.fetchone()
         cur.close()
 
-        if len(user) > 0:
-            session['email'] = user[3]
-            if user[7] == 'y':
-                session['admin'] = user[7]
-                return redirect(url_for("main.show_apps"))
-            return redirect(url_for("main.show_status"))
-        else:
-            if password is False:
-                return render_template("home.html")
+        try:
+            if len(user) > 0:
+                session['email'] = user[3]
+                if user[7] == 'y':
+                    session['admin'] = user[7]
+                    return redirect(url_for("main.show_apps"))
+                return redirect(url_for("main.show_status"))
+        except TypeError as te:
+            print(f"A certain credential does not exist does not exist: {te}")
+            return render_template("home.html")
     else:
         print(F"Invalid...")
         return render_template("home.html")
