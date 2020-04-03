@@ -2,6 +2,17 @@
 * WARNING: Only run this script if you wish to wipe and/or recreate the current
 * working database. DO NOT INCLUDE THIS FILE IN PRODUCTION.
 */
+
+/*
+*
+* To run this script:
+*   1) Login to MySQL from command line
+*   2) copy and paste:
+*       source \path\to\DbConfig.sql;
+*       (If in PyCharm You can copy and paste the path from the left-hand side project panel)
+*   3) Your database changes should now be updated, and any entries are reset
+*/
+
 create database if not exists awla_db;
 use awla_db;
 

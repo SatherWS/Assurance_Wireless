@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL, MySQLdb
+# from flask_mysqldb import MySQL, MySQLdb
+import pymysql
 from . import main
 from . import AdminRoutes
 from LifelineAssistant import createApp
 import itertools
 from .Forms import TicketForm
+import encrypt
 
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+mysql = pymysql.connect(host='localhost', user='root', passwd='temppass1', db='awla_db')
 
 # -------------------------------------------------------------------------+
 # Customer Support Section                                                 |
@@ -75,7 +77,7 @@ def messenger(ticket_id):
 # User Authentication Section                                              |
 # -------------------------------------------------------------------------+
 
-# TODO: APPLY PASSWORD ENCRYPTION USING HASHLIB BEFORE ADDING TO DATABASE
+# TODO: APPLY STRONG PASSWORD ENCRYPTION USING HASHLIB BEFORE ADDING TO DATABASE
 @main.route('/register', methods=['GET', 'POST'])
 def register():
     """ Adds new entries to awla_db.user and awla.applications """
@@ -84,7 +86,7 @@ def register():
         fname = request.form['first']
         lname = request.form['last']
         email = request.form['email']
-        password = request.form['password']
+        password = encrypt.get_cipher(request.form['password'])
         dob = request.form['dob']
         ssn = request.form['ssn']
         cur = mysql.cursor()
@@ -127,14 +129,17 @@ def add_application(app):
 
 
 # TODO: ALLOW USERS TO MAKE MISTAKES WHEN ENTERING CREDENTIALS
-# TODO: APPLY PASSWORD ENCRYPTION THROUGH HASHLIB BEFORE ADDING TO DATABASE
+# TODO: APPLY STRONGER PASSWORD ENCRYPTION THROUGH HASHLIB BEFORE ADDING TO DATABASE
 @main.route("/login", methods=['GET', 'POST'])
 def login():
+
+    print(f"Logging in...")
+
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == "POST":
         uname = request.form['username']
-        password = request.form['password']
+        password = encrypt.get_cipher(request.form['password'])
         cur = mysql.cursor()
         sql = "select * from users where email=%s AND password=%s"
         cur.execute(sql, (uname, password))
@@ -147,7 +152,11 @@ def login():
                 session['admin'] = user[7]
                 return redirect(url_for("main.show_apps"))
             return redirect(url_for("main.show_status"))
+        else:
+            if password is False:
+                return render_template("home.html")
     else:
+        print(F"Invalid...")
         return render_template("home.html")
 
 # Kills current user's session

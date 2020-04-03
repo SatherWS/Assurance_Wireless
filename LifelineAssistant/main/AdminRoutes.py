@@ -1,10 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint
 from flask_mysqldb import MySQL, MySQLdb
+import pymysql
 from . import main
 from .Forms import MessageForm
 import datetime
 
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+mysql = pymysql.connect(host='localhost', user='root', passwd='temppass1', db='awla_db')
 
 # -------------------------------------------------------------------------+
 # Application Management Section                                           |
