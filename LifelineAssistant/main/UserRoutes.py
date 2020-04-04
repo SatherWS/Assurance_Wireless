@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 # from flask_mysqldb import MySQL, MySQLdb
 import pymysql
 from . import main
@@ -7,6 +7,7 @@ from LifelineAssistant import createApp
 import itertools
 from .Forms import TicketForm
 import encrypt
+from passlib.hash import sha256_crypt
 
 mysql = pymysql.connect(host='localhost', user='root', passwd='temppass1', db='awla_db')
 
@@ -85,7 +86,8 @@ def register():
         fname = request.form['first']
         lname = request.form['last']
         email = request.form['email']
-        password = encrypt.get_hash(request.form['password'])
+        password = request.form['password']
+        hashed_password = sha256_crypt.hash(password)  # Password is hashed
         dob = request.form['dob']
         ssn = request.form['ssn']
         cur = mysql.cursor()
@@ -93,7 +95,7 @@ def register():
         # insert data into users table
         sql = """insert into users (fname, lname, email, 
         password, ssn, dob) VALUES (%s,%s,%s,%s,%s,%s)"""
-        values = [fname, lname, email, password, ssn, dob]
+        values = [fname, lname, email, hashed_password, ssn, dob]
         cur.execute(sql, values)
         mysql.commit()
         session['email'] = email
@@ -136,27 +138,42 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == "POST":
-        uname = request.form['username']
-        password = encrypt.get_hash(request.form['password'])
-        cur = mysql.cursor()
-        sql = "select * from users where email=%s AND password=%s"
-        cur.execute(sql, (uname, password))
-        user = cur.fetchone()
-        cur.close()
+        username = request.form['username']
+        password = request.form['password']
+        password_index = 4
 
-        try:
-            if len(user) > 0:
-                session['email'] = user[3]
-                if user[7] == 'y':
-                    session['admin'] = user[7]
-                    return redirect(url_for("main.show_apps"))
-                return redirect(url_for("main.show_status"))
-        except TypeError as te:
-            print(f"A certain credential does not exist does not exist: {te}")
-            return render_template("home.html")
+        cursor = mysql.cursor()
+        statement = "select * from users where email=%s"
+        cursor.execute(statement, username)
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user is None:
+            print(f"\tEntered email does not match our records.")
+            flash("\n\nEntered email does not match our records.", "warning")
+            return render_template("login.html")
+        elif not sha256_crypt.verify(password, user[password_index]):
+            print(f"\tEntered password was incorrect.")
+            flash("\n\nEntered password was incorrect.", "error")
+            return render_template("login.html")
+        elif user is not None:
+            session['email'] = user[3]
+            if user[7] == 'y':
+                session['admin'] = user[7]
+                flash("Login successful!")
+                return redirect(url_for("main.show_apps"))
+            print(f"\tLogin successful!")
+            flash("\n\nLogin successful!")
+            return redirect(url_for("main.show_status"))
+        else:
+            print(f"\tUsername or password is incorrect!")
+            flash("\n\nUsername or password is incorrect!", "warning")
+            return render_template("login.html")
+
     else:
         print(F"Invalid...")
         return render_template("home.html")
+
 
 # Kills current user's session
 @main.route("/logout")
@@ -167,6 +184,7 @@ def logout():
 # -------------------------------------------------------------------------+
 # Application Status Section                                               |
 # -------------------------------------------------------------------------+
+
 
 # Displays application status for logged in customer
 @main.route("/status")
@@ -188,18 +206,20 @@ def show_status():
 # View Rendering Section                                                   |
 # -------------------------------------------------------------------------+
 
+
 # View functions for non logged in users
 @main.route("/")
 def home():
     return render_template("home.html")
+
 
 # Stores landing page draft
 @main.route("/map/")
 def map():
     return render_template("map.html")
 
+
 # Should contain team member info for potential employers
 @main.route("/contact/")
 def contact():
     return render_template("contact.html")
-

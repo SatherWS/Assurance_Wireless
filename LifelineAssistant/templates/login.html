@@ -1,5 +1,14 @@
 {% extends "_layout.html" %}
 {% block content %}
+<!--    {% with messages = get_flashed_messages() %}-->
+<!--        {% if messages %}-->
+<!--            {% for msg in messages %}-->
+<!--                 <p id="p1" style="display: none;">{{msg}}</p>-->
+<!--            {% endfor %}-->
+<!--        {% endif %}-->
+<!--    {% endwith %}-->
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-4 nav-spacing">
@@ -12,9 +21,13 @@
                 <p>Don't have an account? Apply <a href="{{ url_for('main.register') }}">here</a></p>
                 <input type="submit" value="Sign In" class="btn btn-primary form-control" />
                 <!-- Error message here [NOT IMPLEMENTED]-->
-                {% if msg %}
-                    <p>{{ msg }}</p>
-                {% endif %}
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for msg in messages %}
+                            <div class = "alert alert-warning alert-danger" role="alert">{{msg}}</div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
             </form>
         </div>
             <div class="col-md-8"></div>
