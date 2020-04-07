@@ -25,7 +25,6 @@ def show_apps():
     return render_template("admin_templates/applications.html", apps=apps)
 
 
-
 @main.route("/search-apps", methods=['POST','GET'])
 def search_apps():
     """search by application status"""
@@ -44,10 +43,11 @@ def search_apps():
             apps.append(row)
         return render_template("admin_templates/applications.html", apps=apps)
 
+
 def app_comments(app, reason):
     """provide reason for accepting or denying applications"""
     curs = mysql.cursor()
-    sql = "insert into comments(body, admin_email, applicant_email) values (%s, %s, %s)"
+    sql = "insert into reports(body, admin_email, applicant_email) values (%s, %s, %s)"
     values = [reason, session.get('email'), app]
     curs.execute(sql, values)
     mysql.commit()
@@ -63,6 +63,7 @@ def process_apps():
                 return show_apps()
             else:
                 return search_apps() 
+
         elif "submit_btn" in request.form:
             curs = mysql.cursor()
             apps = request.form.getlist("selected")
@@ -86,7 +87,7 @@ def process_apps():
 def show_tickets():
     if session['admin']:
         curs = mysql.cursor()
-        sql = """select id, status, question, requester, acceptor, time_created 
+        sql = """select id, status, category, question, requester, acceptor, time_created 
             from support_tickets order by time_created asc"""
         curs.execute(sql)
         tickets = []
@@ -94,8 +95,16 @@ def show_tickets():
             tickets.append(row)
         mysql.commit()
         if request.method == 'POST':
-            ticket_id = request.form.get('tkt')
-            return redirect(url_for('.select_ticket', ticket_id=ticket_id))
+        # if name=dropdown option, modify status
+            if 'mod-status' in request.form:
+                sql = "update table support_tickets set status = %s where id = %s"
+                values = [request.form.get('mod-status')]
+                print(request.form.get('mod-status'))
+                print(request.form['mod-status'])
+        # if name=tkt return ticket responder view
+            if 'tkt' in request.form:
+                ticket_id = request.form.get('tkt')
+                return redirect(url_for('.select_ticket', ticket_id=ticket_id))
         return render_template('admin_templates/comment-queue.html', tickets=tickets)
 
 
@@ -123,6 +132,7 @@ def select_ticket(ticket_id):
                   (sender_email, ticket_id, msg) values (%s, %s, %s)"""
             values = [sender, ticket_id, msg]
             curs.execute(sql, values)
+
         mysql.commit()
         tkt_info = get_ticket_info(ticket_id)
         return render_template('admin_templates/ticket-response.html', tkt_info=tkt_info)
@@ -131,51 +141,25 @@ def select_ticket(ticket_id):
 # Customer Support Respondent Section, Real Time Chat                      |
 # -------------------------------------------------------------------------+
 
-# in progress d/n delete 3/29
-#def from_admin(ticket_id):
-#    curs = mysql.cursor()
-#    sql = 'select sender_email from support_messages where ticket_id = %s'
-#    curs.execute(sql, [ticket_id])
-#    emails = curs.fetchall()
-#    mysql.commit()
-#    sql = 'select admin from users where email = %s'
-#    for x in emails:
-#        new_str = str(x)
-#        convert = new_str.strip("('',)")
-#        test2 = curs.execute(sql, [convert])
-#        if test2 == '0':
-#            print(test2, 'false')
-#            return False
-#        else:
-#            print(test2, 'true')
-#            return True
-        
 def format_html(data):
     html = ""
     open_div = "<div class='cm-style'><div class='option-box'>"
     close_div = '</div></div>'
-    div_open_plain = '<div>'
-    div_close_plain = '</div>'
     count = 0
     for row in data:
         html += open_div
         for x in row:
             if isinstance(x, datetime):
-                html += div_open_plain
-                html += '<small>' + str(x) + '</small>'
-                #if not from_admin(session.get('tkt')):
-                html += """<div class='icons'>
-                    <i class='fa fa-pencil-square' aria-hidden='true'> edit</i>
-                    <i class='fa fa-trash' aria-hidden='true'> delete</i>
-                </div>"""
-                html += div_close_plain
+                html += '<div>'
+                html += '<p>' + str(x) + '</p>'
+                html += '</div>'
             else:
                 if count == 0:
-                    html += div_open_plain
+                    html += '<div>'
                 count += 1
                 html += "<p>" + x + "</p>"
                 if count == 2:
-                    html += div_close_plain
+                    html += '</div>'
         count = 0
         html += close_div
     return html
@@ -210,7 +194,7 @@ def show_data():
     return data
 
 # -------------------------------------------------------------------------+
-# Customer Support Respondent Section, Ticket Actions                      |
+# Support Ticket Actions: accept ticket, change ticket status, remove      |
 # -------------------------------------------------------------------------+
 
 @main.route('/message-action', methods=['POST'])
@@ -220,9 +204,16 @@ def message_action():
         ticket_id = session.get('tkt')
         if 'take-ticket' in request.form:
             sql = "update support_tickets set status = %s, acceptor = %s where id = %s"
-            values = ['taken', session.get('email'), ticket_id]
-            print(values)
+            values = ['in progress', session.get('email'), ticket_id]
             curs.execute(sql, values)
             mysql.commit()
+        if 'delete-ticket' in request.form:
+            sql = "delete from support_messages where ticket_id = %s"
+            curs.execute(sql, [ticket_id])
+            mysql.commit()
+            sql = "delete from support_tickets where id = %s"
+            curs.execute(sql, [ticket_id])
+            mysql.commit()
+            return redirect(url_for(".show_tickets"))
     return redirect(url_for('.select_ticket', ticket_id=ticket_id))
 

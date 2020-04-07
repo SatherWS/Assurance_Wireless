@@ -24,12 +24,22 @@ https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-ma
     // Initialize and add the map
     function initMap() {
         // The location of Uluru
-        var uluru = { lat: -25.344, lng: 131.036 };
+        var uluru = { lat: 40.0583, lng: -74.4057 };
         // The map, centered at Uluru
         var map = new google.maps.Map(
             document.getElementById('map'), { zoom: 4, center: uluru });
         // The marker, positioned at Uluru
         var marker = new google.maps.Marker({ position: uluru, map: map });
+        var circle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: map,
+            center: uluru,
+            radius: Math.sqrt(16) * 100
+          });
     }
 </script>
 <!--Load the API from the specified URL
