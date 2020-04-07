@@ -1,3 +1,4 @@
+
 /*
 * WARNING: Only run this script if you wish to wipe and/or recreate the current
 * working database. DO NOT INCLUDE THIS FILE IN PRODUCTION.
@@ -64,9 +65,10 @@ insert into users(fname, lname, email, password, ssn, dob) values
 
 
 -- COMMENTS SECTION -------------------------------------------------
-create table comments (
+create table reports (
 	commentid int primary key not null auto_increment,
-	body varchar(40) not null,
+	reason varchar(40) not null,
+  notes varchar(100) null,
 	admin_email varchar(75) not null,
 	applicant_email varchar(75) not null,
 	time_changed datetime default current_timestamp,
@@ -97,3 +99,4 @@ CREATE TABLE `support_messages` (
 
 
 	
+
