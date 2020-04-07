@@ -69,12 +69,16 @@ body {
 
 
 /* Login & Signup ************************************************************************/
+.error-msg {
+    color:red;
+}
 .btn-box {
     margin-top: 1rem;
 }
     .btn-box a {
         margin-left: 1rem;
     }
+
 .cstm-btn {
     border: solid 1.5px #fff!important;
     color: #fff!important;
@@ -155,7 +159,7 @@ span.badge.badge-light.badge-top {
     }
 }
 .fixed-bottom {
-    padding: .5rem 4rem;
+    padding: .5rem 2rem;
     background: #800f69;
 }
 
@@ -230,6 +234,11 @@ span.badge.badge-light.badge-top {
         border-radius: .45rem;
     }
 
+.cstm-login {
+    padding: 1rem!important;
+    
+}
+
 .login-modal p {
     padding-top: 0.7rem;
     padding-bottom: 0;
@@ -254,7 +263,11 @@ span.badge.badge-light.badge-top {
 .choices {
     margin-top: 2rem;
 }
-
+.modal-header {
+    color: #fff!important;
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+}
 /* Home Page & Features Section ********************************************************************/
 /* icons */
 .home-icon-area img {
@@ -268,4 +281,21 @@ span.badge.badge-light.badge-top {
 /* Copyright footer */
 footer {
     text-align: center;
+}
+
+/* Home Page */
+.offer .phone-offer-img {
+    position: absolute;
+    max-height: 400px;
+}
+
+.free-services {
+    background-color: #00aeef;
+    color: #fff;
+    padding: 1rem;
+}
+
+.apply-now-link-spc {
+    color: #fff!important;
+    border-color:#fff!important;
 }

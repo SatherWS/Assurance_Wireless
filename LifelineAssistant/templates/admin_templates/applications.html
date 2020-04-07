@@ -49,7 +49,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col"></th>
+                    <th scope="col"><input type="checkbox" name="selected" value="all"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Applicant Name</th>
                     <th scope="col">Applicant Email</th>
@@ -86,12 +86,13 @@
                             <select class="form-control" id="add-options" name="reason">
                             </select>
                         </div>
+                        <textarea class="form-control mt-2" placeholder="Write additional notes here" rows="5"></textarea>
                     </div>
                     <div class="modal-footer">
                         <div id="modal-submit">
-                            <a onclick="processApps()" class="btn btn-success success">Confirm</a>
+                            <a onclick="processApps()" class="btn btn-light success">Confirm</a>
                         </div>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -102,61 +103,5 @@
     
 {% endblock %}
 {% block js %}
-
-<script>
-    function getSelected() {
-        var items = document.getElementsByName("selected");
-        var is_checked = [];
-        for (var i = 0; i < items.length; i++) {
-            if (items[i].checked) {
-                is_checked.push(items[i]);
-            }
-        }
-        // Return the array if it is non-empty, or null
-        return is_checked;
-    }
-
-    var choice = '';
-
-    function showAccepted() {
-        choice = 'accept';
-        var selects = getSelected();
-        var display = document.getElementById("chosen");
-        var add_options = document.getElementById("add-options");
-        display.innerHTML = '';
-        add_options.innerHTML = '';
-        add_options.innerHTML += "<option name=''>Qualifying tax bracket</option>";
-        add_options.innerHTML += "<option name=''>Has existing government assistance</option>";
-        add_options.innerHTML += "<option name=''>Approved for low cost services only</option>";
-
-        for (var i = 0; i < selects.length; i++) {
-            display.innerHTML += "<li>Applicant's Email: " + selects[i].value + '</li>';
-        }
-        document.getElementById('decision').innerHTML = 'Accept';
-    }
-
-    function showDenied() {
-        choice = 'deny'
-        var selects = getSelected();
-        var display = document.getElementById("chosen");
-        var add_options = document.getElementById("add-options");
-        display.innerHTML = '';
-        add_options.innerHTML = '';
-        add_options.innerHTML += "<option name=''>Provided fradulant information</option>";
-        add_options.innerHTML += "<option name=''>Income level was too high</option>";
-        add_options.innerHTML += "<option name=''>Geographic location doesn't qualify</option>";
-
-        for (var i = 0; i < selects.length; i++) {
-            display.innerHTML += "<li>Applicant's Email: " + selects[i].value + '</li>';
-        }
-        document.getElementById("decision").innerHTML = 'Deny';
-    }
-
-    function processApps() {
-        if (choice == 'accept') 
-            document.getElementById("accept").click();
-        else
-            document.getElementById("deny").click();
-    }
-</script>
+<script src="{{ url_for('static', filename='js/helper.js') }}"></script>
 {% endblock %}

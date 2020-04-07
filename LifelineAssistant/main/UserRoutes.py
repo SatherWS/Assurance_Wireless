@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 from flask_mysqldb import MySQL, MySQLdb
+from  geopy.geocoders import Nominatim
 from . import main
 from . import AdminRoutes
 from LifelineAssistant import createApp
 import itertools
 from .Forms import TicketForm
+from passlib.hash import sha256_crypt
 
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 # -------------------------------------------------------------------------+
 # Customer Support Section                                                 |
@@ -68,12 +71,37 @@ def messenger(ticket_id):
         values = [sender, ticket_id, msg]
         curs.execute(sql, values)
     mysql.commit()
-    return render_template('help_center/comment.html')
+    return render_template('help_center/send-msg.html')
 
 
 # -------------------------------------------------------------------------+
 # User Authentication Section                                              |
 # -------------------------------------------------------------------------+
+def check_address(addr):
+    location = geolocator.geocode(addr)
+    try:
+        print(location.address)
+        print("GPS Coordinates",(location.latitude, location.longitude))
+        return True
+
+    except AttributeError:
+        print("Location DNE")
+        return False
+
+def add_application(app):
+    curs = mysql.cursor()
+    address_str = app[6]+' '+app[8] +' '+app[5]
+    # prepare insert statement -- applications table
+    # email, phone, fname, lname, language, street, city, state, zipcode
+    sql = """insert into applications(applicant_email, phone_number, fname, lname, 
+    language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+    if check_address(address_str):
+        curs.execute(sql, app)
+        mysql.commit()
+    else:
+        return "failed address does not exist"
+
 
 # TODO: APPLY PASSWORD ENCRYPTION USING HASHLIB BEFORE ADDING TO DATABASE
 @main.route('/register', methods=['GET', 'POST'])
@@ -85,6 +113,7 @@ def register():
         lname = request.form['last']
         email = request.form['email']
         password = request.form['password']
+        hashed_password = sha256_crypt.hash(password)  # Password is hashed (not in use)
         dob = request.form['dob']
         ssn = request.form['ssn']
         cur = mysql.cursor()
@@ -93,43 +122,34 @@ def register():
         sql = """insert into users (fname, lname, email, 
         password, ssn, dob) VALUES (%s,%s,%s,%s,%s,%s)"""
         values = [fname, lname, email, password, ssn, dob]
-        cur.execute(sql, values)
-        mysql.commit()
-        session['email'] = email
 
-        application = []  # pass list into add_application def
-        application.append(request.form['email'])
-        application.append(request.form['first'])
-        application.append(request.form['last'])
-        application.append(request.form.get('language'))
-        application.append(request.form['phone'])
-        application.append(request.form['street'])
-        application.append(request.form['city'])
-        application.append(request.form.get('state'))
-        application.append(request.form['zipcode'])
-        add_application(application)
-        return redirect(url_for("main.home"))
+        app = []  # pass list into add_application def
+        app.append(request.form['email'])
+        app.append(request.form['phone'])
+        app.append(request.form['first'])
+        app.append(request.form['last'])
+        app.append(request.form.get('language'))
+        app.append(request.form['zipcode'])
+        app.append(request.form['street'])
+        app.append(request.form['city'])
+        app.append(request.form.get('state'))
+        address_str = app[6]+' '+app[8] +' '+app[5]
+
+        if check_address(address_str):
+            cur.execute(sql, values)
+            mysql.commit()
+            session['email'] = email
+            add_application(app)
+            return redirect(url_for("main.home"))
+        else:
+            error = "failed address does not exist"
+            return render_template("register.html", error=error)
     return render_template("register.html")
 
 
-def add_application(app):
-    curs = mysql.cursor()
-    # use this string in find_coordinates.py
-    """
-    address_str = street+' '+city+ ' '+state+ ' '+zip_code
-    print(address_str)  
-    """
-    # prepare insert statement -- applications table
-    sql = """insert into applications(applicant_email, phone_number, fname, lname, 
-    language, zipcode, street, city, state) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
-    curs.execute(sql, app)
-    mysql.commit()
-
-
-# TODO: ALLOW USERS TO MAKE MISTAKES WHEN ENTERING CREDENTIALS
-# TODO: APPLY PASSWORD ENCRYPTION THROUGH HASHLIB BEFORE ADDING TO DATABASE
 @main.route("/login", methods=['GET', 'POST'])
 def login():
+    """ working login method """
     if request.method == 'GET':
         return render_template('login.html')
     elif request.method == "POST":
@@ -140,15 +160,63 @@ def login():
         cur.execute(sql, (uname, password))
         user = cur.fetchone()
         cur.close()
+        try:  # if sql statement returns 1 row with 9 columns, continue
+            if len(user) == 9:
+                session['email'] = user[3]
+                if user[7] == 'y':
+                    session['admin'] = user[7]
+                    return redirect(url_for("main.show_apps"))
+                return redirect(url_for("main.show_status"))
 
-        if len(user) > 0:
+        except TypeError as e:
+            print("server error:", e)
+            msg = "Error invalid credentials"
+            return render_template("login.html", msg=msg)
+        return render_template("login.html")
+
+
+@main.route("/login-encrypted", methods=['GET', 'POST'])
+def encrypted_login():
+    """ In Progress Login Method """
+    print(f"Logging in...")
+    if request.method == 'GET':
+        return render_template('login.html')
+    elif request.method == "POST":
+        username = request.form['username']
+        password = request.form['password']
+        password_index = 4
+
+        cursor = mysql.cursor()
+        statement = "select * from users where email=%s" 
+        cursor.execute(statement, [username])
+        user = cursor.fetchone()
+        cursor.close()
+
+        if user is None:
+            print(f"\tEntered email does not match our records.")
+            flash("\n\nEntered email does not match our records.", "warning")
+            return render_template("login.html")
+        elif not sha256_crypt.verify(password, user[password_index]):
+            print(f"\tEntered password was incorrect.")
+            flash("\n\nEntered password was incorrect.", "error")
+            return render_template("login.html")
+        elif user is not None:
             session['email'] = user[3]
             if user[7] == 'y':
                 session['admin'] = user[7]
+                flash("Login successful!")
                 return redirect(url_for("main.show_apps"))
+            print(f"\tLogin successful!")
+            flash("\n\nLogin successful!")
             return redirect(url_for("main.show_status"))
+        else:
+            print(f"\tUsername or password is incorrect!")
+            flash("\n\nUsername or password is incorrect!", "warning")
+            return render_template("login.html")
     else:
+        print(F"Invalid...")
         return render_template("home.html")
+
 
 # Kills current user's session
 @main.route("/logout")
@@ -169,11 +237,16 @@ def show_status():
         sql = """select applications.fname, applications.lname, applications.created, applications.status, 
             applications.zipcode, applications.street, applications.city, applications.state, users.dob 
             from applications inner join users on applications.applicant_email = users.email
-            where applicant_email = %s;"""
+            where applicant_email = %s"""
         user = session['email']
         curs.execute(sql, [user])
+        test = []
+        for i in curs:
+            test.append(i)
+        print(test)
         data = curs.fetchall()
         rs = list(itertools.chain(*data))
+        print(rs)
     return render_template("status.html", rs=rs)
 
 # -------------------------------------------------------------------------+

@@ -47,11 +47,14 @@
                 <option value="spanish">Spanish</option>
             </select>
             <p class="su"><b>Note:</b> The below two fields will allow you to login and track the status of your application.</p>
-            <input name="email" type="text" placeholder="Email" class="form-control su" required>
+            <input name="email" type="email" placeholder="Email" class="form-control su" required>
             <input name="password" type="password" placeholder="Password" class="form-control su" required>
             
             <!-- Submit form to server -->
-            <button type="submit" class="btn btn-success su">Submit Application</button>
+            <button type="submit" class="btn btn-primary su">Submit Application</button>
+            {% if error %}
+               <p>{{error}}</p>
+            {% endif %}
         </form>
     </div>
     <div class="col-md-3"></div>
