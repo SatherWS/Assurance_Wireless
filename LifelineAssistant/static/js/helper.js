@@ -57,10 +57,32 @@ function processApps() {
         document.getElementById("deny").click();
 }
 
+// search applications with similar text in text field
+function searchApps() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("content");
+    tr = table.getElementsByTagName("tr");
+
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[2];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+// TODO: FIX THIS METHOD
 // simple function that changes all user application checkboxes to selected
 function selectAll(source) {
-    var boxes = document.getElementsByName('selected[]');
-    for (var i = 0; i < boxes.length(); i++) {
+    var boxes = document.getElementsByName('selected');
+    for (var i = 0; i < boxes.length; i++) {
         // change boxes to selected
         boxes[i].checked = source.checked;
     }

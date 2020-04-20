@@ -1,0 +1,11 @@
+@import url(//fonts.googleapis.com/css?family=Josefin+Sans:300,300italic,400,400italic,700,700italic|Josefin+Slab:300,300italic,400,400italic,700,700italic);@import url(//fonts.googleapis.com/css?family=Montserrat:400,400italic,600,600italic,900,900italic);
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}

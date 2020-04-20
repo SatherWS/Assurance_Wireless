@@ -269,6 +269,10 @@ span.badge.badge-light.badge-top {
     border-top-right-radius: 0 !important;
 }
 /* Home Page & Features Section ********************************************************************/
+#about-features {
+    padding: 0 50px;
+}
+
 /* icons */
 .home-icon-area img {
     height: 75px;

@@ -5,6 +5,15 @@
     font-weight: lighter
 }
 
+#prefoot {
+    background: #4d4d4f;
+    color: #fff;
+    padding-top: 1rem;
+}
+
+#prefoot a {
+    color: #fff;
+}
 #wrapper h1,#wrapper h2,#wrapper h3,#wrapper h4,#wrapper h5,#wrapper h6 {
     margin: 0;
     padding: 12px 0
@@ -481,19 +490,19 @@ body.bgcontain #wrapper .ds-cosmos-animate-slider-wrapper .carousel .carousel-in
 }
 
 #wrapper .featured-area .fright p {
-    color: #4d4d4f !important
+    color: #4d4d4f !important;
 }
 
 #wrapper .featured-area .fright h1,#wrapper .featured-area .fright h2,#wrapper .featured-area .fright h3,#wrapper .featured-area .fright h4,#wrapper .featured-area .fright h5,#wrapper .featured-area .fright h6 {
     font-family: Montserrat;
     font-weight: 600;
-    color: #00aeef !important
+    color: #00aeef !important;
 }
 
 #wrapper .featured-area .left-feature,#wrapper .featured-area .right-feature {
     margin-left: -15px;
     margin-right: -15px;
-    padding: 50px 50px
+    padding: 50px 50px;
 }
 
 @media (max-width: 480px) {

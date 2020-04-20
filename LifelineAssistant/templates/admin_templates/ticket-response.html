@@ -23,7 +23,7 @@
                     Download Chat Log
                 </a>
                 {% if tkt_info[4] == None %}
-                    <button type="submit" name="take-ticket" class="btn btn-secondary">
+                    <button type="submit" name="mod-status" value="in progress" class="btn btn-secondary">
                         <i class="fa fa-check" aria-hidden="true"></i>
                         Take Ticket
                     </button>
@@ -31,7 +31,7 @@
                 <!-- Ticket Options: download, change status, delete -->
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Ticket Options
+                        Change Status
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <input type="submit" name="mod-status" value="In Progress" class="dropdown-item" />

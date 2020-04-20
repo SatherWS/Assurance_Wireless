@@ -2,6 +2,7 @@
 {% block head %}
 <title>Application Management Console</title>
 {% endblock %}
+
 {% block content %}
 <div class="container-fluid nav-spacing">
     <div class="app-mngr-box">
@@ -29,27 +30,26 @@
 
             <!-- Search Controls -->
             <div class="form-inline">
-                <input class="form-control mr-sm-2"
-                       type="search" name="zip"
-                       placeholder="Search Anything" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" name="zip" onkeyup="searchApps()"
+                       placeholder="Search Name" aria-label="Search" id="search">
 
-                <select class="form-control mr-2" name="filter">
-                    <option value="All">Show All</option>
-                    <option value="Pending">Show Pending</option>
-                    <option value="Accepted">Show Accepted</option>
-                    <option value="Denied">Show Denied</option>
-                </select>
-
-                <button name="search-btn" type="submit"
-                        class="btn btn-outline-success my-2 my-sm-0">
-                    Search
-                </button>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ticket Options
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <input type="submit" name="filter" value="Show All" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Pending" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Accepted" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Denied" class="dropdown-item" />
+                    </div>
+                </div>
             </div>
         </nav>
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th scope="col"><input type="checkbox" name="selected" value="all"></th>
+                    <th scope="col"><input type="checkbox" onclick="selectAll(this)"></th>
                     <th scope="col">Status</th>
                     <th scope="col">Applicant Name</th>
                     <th scope="col">Applicant Email</th>
@@ -57,7 +57,7 @@
                     <th scope="col">Submit Datetime</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="content">
                 {% for row in apps %}
                 <tr name="process">
                     <td>
@@ -99,8 +99,6 @@
         </div>
     </form>
 </div>
-
-    
 {% endblock %}
 {% block js %}
 <script src="{{ url_for('static', filename='js/helper.js') }}"></script>

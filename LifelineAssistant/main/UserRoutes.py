@@ -8,6 +8,7 @@ import itertools
 from .Forms import TicketForm
 from passlib.hash import sha256_crypt
 
+#mysql = MySQLdb.connect(host='35.231.239.49', user='root', passwd='tGHC97h8xDoI6b1m', db='assurance-wireless-db')
 mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 

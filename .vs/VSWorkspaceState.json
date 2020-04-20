@@ -3,8 +3,7 @@
     "",
     "\\LifelineAssistant",
     "\\LifelineAssistant\\main",
-    "\\LifelineAssistant\\static",
-    "\\LifelineAssistant\\templates",
+    "\\LifelineAssistant\\static\\js",
     "\\LifelineAssistant\\templates\\admin_templates",
     "\\LifelineAssistant\\templates\\help_center"
   ],
