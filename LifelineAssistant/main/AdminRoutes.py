@@ -1,11 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Blueprint, Response
-from flask_mysqldb import MySQL, MySQLdb
+import pymysql
 from . import main
 from .Forms import MessageForm
 from datetime import datetime
 
-#mysql = MySQLdb.connect(host='35.231.239.49', user='root', passwd='tGHC97h8xDoI6b1m', db='assurance-wireless-db')
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+
+mysql = pymysql.connect(host='database-2.co8emtfir2nv.us-east-2.rds.amazonaws.com', user='admin', passwd='P3rsonaFiv3', db='awla_db')
+
 # ---------------------------------------------------------------------------------+
 # Application Management Section                                                   |
 # ---------------------------------------------------------------------------------+
@@ -55,6 +56,7 @@ def app_comments(app, reason):
 def process_apps():
     """ modify application data """
     if session['admin'] and request.method == "POST":
+        
         # search by status: accepted, denied, status
         if "filter" in request.form:
             if request.form.get('filter') == 'Show All':

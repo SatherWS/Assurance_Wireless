@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-from flask_mysqldb import MySQL, MySQLdb
+import pymysql
 from  geopy.geocoders import Nominatim
 from . import main
 from . import AdminRoutes
@@ -8,8 +8,8 @@ import itertools
 from .Forms import TicketForm
 from passlib.hash import sha256_crypt
 
-#mysql = MySQLdb.connect(host='35.231.239.49', user='root', passwd='tGHC97h8xDoI6b1m', db='assurance-wireless-db')
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+
+mysql = pymysql.connect(host='database-2.co8emtfir2nv.us-east-2.rds.amazonaws.com', user='admin', passwd='P3rsonaFiv3', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 # -------------------------------------------------------------------------+
@@ -114,7 +114,6 @@ def register():
         lname = request.form['last']
         email = request.form['email']
         password = request.form['password']
-        hashed_password = sha256_crypt.hash(password)  # Password is hashed (not in use)
         dob = request.form['dob']
         ssn = request.form['ssn']
         cur = mysql.cursor()
@@ -176,49 +175,6 @@ def login():
         return render_template("login.html")
 
 
-@main.route("/login-encrypted", methods=['GET', 'POST'])
-def encrypted_login():
-    """ In Progress Login Method """
-    print(f"Logging in...")
-    if request.method == 'GET':
-        return render_template('login.html')
-    elif request.method == "POST":
-        username = request.form['username']
-        password = request.form['password']
-        password_index = 4
-
-        cursor = mysql.cursor()
-        statement = "select * from users where email=%s" 
-        cursor.execute(statement, [username])
-        user = cursor.fetchone()
-        cursor.close()
-
-        if user is None:
-            print(f"\tEntered email does not match our records.")
-            flash("\n\nEntered email does not match our records.", "warning")
-            return render_template("login.html")
-        elif not sha256_crypt.verify(password, user[password_index]):
-            print(f"\tEntered password was incorrect.")
-            flash("\n\nEntered password was incorrect.", "error")
-            return render_template("login.html")
-        elif user is not None:
-            session['email'] = user[3]
-            if user[7] == 'y':
-                session['admin'] = user[7]
-                flash("Login successful!")
-                return redirect(url_for("main.show_apps"))
-            print(f"\tLogin successful!")
-            flash("\n\nLogin successful!")
-            return redirect(url_for("main.show_status"))
-        else:
-            print(f"\tUsername or password is incorrect!")
-            flash("\n\nUsername or password is incorrect!", "warning")
-            return render_template("login.html")
-    else:
-        print(F"Invalid...")
-        return render_template("home.html")
-
-
 # Kills current user's session
 @main.route("/logout")
 def logout():
@@ -244,14 +200,13 @@ def show_status():
         test = []
         for i in curs:
             test.append(i)
-        print(test)
         data = curs.fetchall()
         rs = list(itertools.chain(*data))
-        print(rs)
     return render_template("status.html", rs=rs)
 
+
 # -------------------------------------------------------------------------+
-# View Rendering Section                                                   |
+# Simple View Rendering Section                                            |
 # -------------------------------------------------------------------------+
  
 @main.route("/")
