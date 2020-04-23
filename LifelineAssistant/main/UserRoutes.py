@@ -84,10 +84,10 @@ def check_address(addr):
         print(location.address)
         print("GPS Coordinates",(location.latitude, location.longitude))
         return True
-
     except AttributeError:
         print("Location DNE")
         return False
+
 
 def add_application(app):
     curs = mysql.cursor()

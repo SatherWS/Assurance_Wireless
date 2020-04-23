@@ -43,11 +43,15 @@ def search_apps():
         return render_template("admin_templates/applications.html", apps=apps)
 
 
-def app_comments(app, reason):
+def app_comments(app, reason, *argv):
     """provide reason for accepting or denying applications"""
     curs = mysql.cursor()
-    sql = "insert into reports(reasoning, admin_email, applicant_email) values (%s, %s, %s)"
-    values = [reason, session.get('email'), app]
+    if argv:
+        sql = "insert into reports(notes, reason, admin_email, applicant_email) values (%s, %s, %s, %s)"
+        values = [argv, reason, session.get('email'), app]
+    else:
+        sql = "insert into reports(reason, admin_email, applicant_email) values (%s, %s, %s)"
+        values = [reason, session.get('email'), app]
     curs.execute(sql, values)
     mysql.commit()  
 
@@ -56,7 +60,6 @@ def app_comments(app, reason):
 def process_apps():
     """ modify application data """
     if session['admin'] and request.method == "POST":
-        
         # search by status: accepted, denied, status
         if "filter" in request.form:
             if request.form.get('filter') == 'Show All':
@@ -70,7 +73,10 @@ def process_apps():
             # set status variable to value of accept or deny button
             status = request.form["submit_btn"]
             for i in apps:
-                app_comments(i, request.form.get('reason'))
+                if request.form.get('notes'):
+                    app_comments(i, request.form.get('reason'), request.form.get('notes'))
+                else:
+                    app_comments(i, request.form.get('reason'))
                 sql = "update applications set status = %s where applicant_email = %s"
                 values = (status, i)
                 curs.execute(sql, values)
