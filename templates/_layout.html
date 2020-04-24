@@ -19,7 +19,7 @@
 </head>
 <body>
     <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('main.home') }}">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
             <img src="{{ url_for('static', filename='imgs/AS-logo.png') }}" height="85px">
         </a>
         <button class="navbar-toggler" type="button"
@@ -32,36 +32,36 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.new_ticket') }}">Support Chat</a>
+                    <a class="nav-link" href="{{ url_for('new_ticket') }}">Support Chat</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.map') }}">Coverage Map</a>
+                    <a class="nav-link" href="{{ url_for('map') }}">Coverage Map</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('main.contact') }}">Contact Us</a>
+                    <a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a>
                 </li>
             </ul>
             <div class="form-inline my-2 my-lg-0">
                 <!-- Admin user buttons -->
                 {% if session['admin'] %}
                 <a class="btn btn-secondary lb" type="button"
-                   href="{{ url_for('main.show_tickets') }}">
+                   href="{{ url_for('show_tickets') }}">
                     Support Queue
                 </a>
                 <a class="btn btn-secondary lb" type="button"
-                   href="{{ url_for('main.show_apps') }}">
+                   href="{{ url_for('show_apps') }}">
                     Application Manager
                 </a>
-                <a class="btn cstm-btn" href="{{ url_for('main.logout') }}">Log Out</a>
+                <a class="btn cstm-btn" href="{{ url_for('logout') }}">Log Out</a>
 
                 <!-- Logged in user buttons -->
                 {% elif session['email'] %}
-                <a class="btn btn-secondary lb" href="{{ url_for('main.show_status') }}">Application Status</a>
+                <a class="btn btn-secondary lb" href="{{ url_for('show_status') }}">Application Status</a>
                 <a class="btn cstm-btn" href="/logout">Log Out</a>
                 <!-- Non-Logged in user buttons -->
                 {% else %}
-                <a class="btn btn-secondary lb" href="{{ url_for('main.register') }}">Apply Today</a>
-                <a class="btn cstm-btn" href="{{ url_for('main.login') }}">Log In</a>
+                <a class="btn btn-secondary lb" href="{{ url_for('register') }}">Apply Today</a>
+                <a class="btn cstm-btn" href="{{ url_for('login') }}">Log In</a>
                 {% endif %}
             </div>
         </div>

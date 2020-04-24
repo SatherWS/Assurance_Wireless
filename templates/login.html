@@ -9,7 +9,7 @@
             <form action="/login" method="post">
                 <input id="email_field" name="username" type="text" placeholder="Enter Email" class="form-control" required/>
                 <input id="password_field" name="password" type="password" placeholder="Enter Password" class="form-control" required/>
-                <p>Don't have an account? Apply <a href="{{ url_for('main.register') }}">here</a></p>
+                <p>Don't have an account? Apply <a href="{{ url_for('register') }}">here</a></p>
                 {% if msg %}
                     <p class="error-msg">{{ msg }}</p>
                 {% endif %}

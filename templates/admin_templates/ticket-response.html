@@ -16,8 +16,8 @@
             </ul>
         </div>
         <div class="col-md-6 ticket-actions">
-            <form action="{{ url_for('main.message_action') }}" method="post">
-                <a href="{{ url_for('main.get_chat_log') }}"
+            <form action="{{ url_for('message_action') }}" method="post">
+                <a href="{{ url_for('get_chat_log') }}"
                    type="submit" name="download" class="btn btn-outline-default">
                     <i class="fa fa-download" aria-hidden="true"></i>
                     Download Chat Log
