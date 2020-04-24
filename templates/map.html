@@ -4,50 +4,38 @@ TODO: Multi-Markers AJAX Stack Overflow link
 https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
 -->
 {% block head %}
-<style>
-    /* Set the size of the div element that contains the map */
-    #map {
-        height: 400px; /* The height is 400 pixels */
-        width: 100%; /* The width is the width of the web page */
-    }
-</style>
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 400px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+        #mapid { height: 300px; }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
 {% endblock %}
 {% block content %}
 <div class="container nav-spacing">
     <h1>Lifeline Assistance Map</h1>
     <p>Check out where Lifeline applications have been accepted around the world.</p>
-    <div id="map"></div>
+    <div id="mapid"></div>
 </div>
 {% endblock %}
 {% block js %}
 <script>
-    // Initialize and add the map
-    function initMap() {
-        // The location of Uluru
-        var uluru = { lat: 40.0583, lng: -74.4057 };
-        // The map, centered at Uluru
-        var map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 4, center: uluru });
-        // The marker, positioned at Uluru
-        var marker = new google.maps.Marker({ position: uluru, map: map });
-        var circle = new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: map,
-            center: uluru,
-            radius: Math.sqrt(16) * 100
-          });
-    }
-</script>
-<!--Load the API from the specified URL
-* The async attribute allows the browser to render the page while the API loads
-* The key parameter will contain your own API key (which is not needed for this tutorial)
-* The callback parameter executes the initMap() function
--->
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoKgA24d6Gsm7mCHScsjodNqYqeAkuEmU&callback=initMap">
+    var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1Ijoic2F0aGVyYyIsImEiOiJjazllbWNmZHMwM2d2M2VwOXBsaDhxYjExIn0.9zcZ-rauP3kxd6XpraZpsA'
+}).addTo(mymap);
 </script>
 {% endblock %}

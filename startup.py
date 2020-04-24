@@ -1,14 +1,15 @@
 from flask import Flask, render_template, request, redirect, url_for, session, Response
-from flask_mysqldb import MySQL, MySQLdb
+#from flask_mysqldb import MySQL, MySQLdb
 from  geopy.geocoders import Nominatim
 import itertools
 from Forms import TicketForm
 from passlib.hash import sha256_crypt
 from datetime import datetime
+import pymysql
 
 app = Flask(__name__)
 app.secret_key = "aknfn348h23h5rwainfoanfw4"
-mysql = MySQLdb.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+mysql = pymysql.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 # -------------------------------------------------------------------------+
@@ -17,7 +18,7 @@ geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 @app.route('/new-ticket', methods=['POST', 'GET'])
 def new_ticket():
-    """ 1st form in the process creates a new ticket """
+    """ uses Forms.py to create ticket submission form """
     form = TicketForm()
     if form.validate_on_submit():
         session['chat-email'] = form.contact.data
