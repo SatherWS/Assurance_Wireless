@@ -8,7 +8,7 @@ import pymysql
 
 app = Flask(__name__)
 app.secret_key = "aknfn348h23h5rwainfoanfw4"
-mysql = pymysql.connect(host='localhost', user='root', passwd='mysql', db='awla_db')
+mysql = pymysql.connect(host='database-2.co8emtfir2nv.us-east-2.rds.amazonaws.com', user='admin', passwd='P3rsonaFiv3', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 # -------------------------------------------------------------------------+
@@ -43,7 +43,7 @@ def submit_ticket():
     curs.execute(sql, values)
     mysql.commit()
     ticket_id = get_ticket_fk(ticket)
-    return redirect(url_for('.messenger', ticket_id=ticket_id))
+    return redirect(url_for('.messenger', ticket_id=ticket_id, _scheme='http'))
 
 
 def get_ticket_fk(ticket):
@@ -263,13 +263,16 @@ def search_apps():
         return render_template("admin_templates/applications.html", apps=apps)
 
 
-def app_comments(app, reason):
-    """provide reason for accepting or denying applications"""
+def app_comments(app, reason, *argv):
     curs = mysql.cursor()
-    sql = "insert into reports(reasoning, admin_email, applicant_email) values (%s, %s, %s)"
-    values = [reason, session.get('email'), app]
+    if argv:
+        sql = "insert into reports(notes, reason, admin_email, applicant_email) values (%s, %s, %s, %s)"
+        values = [argv, reason, session.get('email'), app]
+    else:
+        sql = "insert into reports(reason, admin_email, applicant_email) values (%s, %s, %s)"
+        values = [reason, session.get('email'), app]
     curs.execute(sql, values)
-    mysql.commit()  
+    mysql.commit()
 
 
 @app.route("/process_apps", methods=['GET', 'POST'])
@@ -289,15 +292,16 @@ def process_apps():
             # set status variable to value of accept or deny button
             status = request.form["submit_btn"]
             for i in apps:
-                app_comments(i, request.form.get('reason'))
+                if request.form.get('notes'):
+                    app_comments(i, request.form.get('reason'), request.form.get('notes'))
+                else:
+                    app_comments(i, request.form.get('reason'))
                 sql = "update applications set status = %s where applicant_email = %s"
                 values = (status, i)
                 curs.execute(sql, values)
                 mysql.commit()
-            
             return show_apps()  # get results from modal then redirect view
         return render_template("admin_templates/applications.html")
-
 
 # ----------------------------------------------------------------------------------+    
 # Customer Support Ticket Responder Section                                         |
@@ -457,7 +461,6 @@ def message_action():
         ticket_id = session.get('tkt')
 
         if 'mod-status' in request.form:
-            print(request.form['mod-status'])
             sql = "update support_tickets set status = %s, acceptor = %s where id = %s"
             values = [request.form['mod-status'], session.get('email'), ticket_id]
             curs.execute(sql, values)
