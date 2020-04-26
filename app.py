@@ -7,8 +7,7 @@ from datetime import datetime
 import pymysql
 
 app = Flask(__name__)
-app.secret_key = "aknfn348h23h5rwainfoanfw4"
-mysql = pymysql.connect(host='database-2.co8emtfir2nv.us-east-2.rds.amazonaws.com', user='admin', passwd='P3rsonaFiv3', db='awla_db')
+mysql = pymysql.connect(host='localhost', user='root', passwd='P3rsonaFiv3', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 
 # -------------------------------------------------------------------------+
@@ -475,5 +474,3 @@ def message_action():
             return redirect(url_for(".show_tickets"))
     return redirect(url_for('.select_ticket', ticket_id=ticket_id))
 
-if __name__ == '__main__':
-    app.run()
