@@ -316,7 +316,6 @@ def filter_status():
         sql = """select id, status, category, question, requester, acceptor, time_created 
             from support_tickets where status = %s order by time_created asc"""
         values = [request.form.get('filter')]
-        
         curs.execute(sql, values)
         mysql.commit()
         tickets = []
@@ -477,5 +476,4 @@ def message_action():
     return redirect(url_for('.select_ticket', ticket_id=ticket_id))
 
 if __name__ == '__main__':
-    app.debug=True
     app.run()
