@@ -7,6 +7,7 @@ from datetime import datetime
 import pymysql
 
 app = Flask(__name__)
+app.secret_key = "aknfn348h23h5rwainfoanfw4"
 mysql = pymysql.connect(host='localhost', user='root', passwd='P3rsonaFiv3', db='awla_db')
 geolocator = Nominatim(user_agent="Assurance_Wireless")
 
@@ -139,7 +140,7 @@ def register():
             mysql.commit()
             session['email'] = email
             add_application(app)
-            return redirect(url_for("home"))
+            return redirect(url_for(".home"))
         else:
             error = "failed address does not exist"
             return render_template("register.html", error=error)
@@ -164,8 +165,8 @@ def login():
                 session['email'] = user[3]
                 if user[7] == 'y':
                     session['admin'] = user[7]
-                    return redirect(url_for("show_apps"))
-                return redirect(url_for("show_status"))
+                    return redirect(url_for(".show_apps"))
+                return redirect(url_for(".show_status"))
 
         except TypeError as e:
             print("server error:", e)
@@ -202,7 +203,6 @@ def show_status():
         print(test)
         data = curs.fetchall()
         rs = list(itertools.chain(*data))
-        print(rs)
     return render_template("status.html", rs=rs)
 
 # -------------------------------------------------------------------------+
