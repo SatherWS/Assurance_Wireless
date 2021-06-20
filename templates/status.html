@@ -1,0 +1,33 @@
+{% extends "_layout.html" %}
+{% block title %}
+{% endblock %}
+{% block content %}
+<div class="container status-body">
+    <div class="row">
+        <div class="col-md-6 cstm-card">
+            <h2>Application Status <span class="badge badge-light badge-top">{{rs[3]}}</span></h2>
+            <p>Your results will be emailed to you at {{session['email']}}</a></p>
+            <ul>
+                <li><h5>Applicant: {{rs[0]}} {{rs[1]}}</h5></li>
+                <li><h5>Date of Birth: {{rs[8]}}</h5></li>
+                <li>
+                    <h5>Address: {{rs[5]}}, {{rs[6]}}, {{rs[7]}}, {{rs[4]}}</h5>
+                </li>
+            </ul>
+            <div class="cstm-footer">
+                <h3><span class="badge badge-light">Applied On: {{rs[2]}}</span></h3>
+            </div>
+        </div>
+        <div class="col-md-6 text-right">
+            <h3>Support Tickets</h3>
+            {% if tickets == None %}
+            {% for tick in tickets %}
+                <p><a>{{tick}}</a></p>
+            {% endfor %}
+            {% else %}
+                <p>This user has not submitted any tickets</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

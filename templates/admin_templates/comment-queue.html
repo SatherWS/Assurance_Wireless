@@ -1,0 +1,71 @@
+{% extends "_layout.html" %}
+{% block content %}
+<div class="container-fluid nav-spacing">
+    <div class="app-mngr-box">
+        <div>
+            <h4>Customer Support Queue </h4>
+            <p>Current User: {{session['email']}}</p>
+        </div>
+        <form action="{{url_for('.show_tickets')}}" method="post" class="form-inline">
+            <input class="form-control mr-sm-2" type="search" name="zip" id="search"
+                   placeholder="Find Inquirer" aria-label="Search" onkeyup="searchApps()">
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle mr-sm-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ticket Status Filter
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <input type="submit" name="filter" value="Show All" class="dropdown-item" />
+                    <input type="submit" name="filter" value="In Progress" class="dropdown-item" />
+                    <input type="submit" name="filter" value="Closed" class="dropdown-item" />
+                    <input type="submit" name="filter" value="Stuck" class="dropdown-item" />
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" 
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Ticket Category Filter
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <input type="submit" name="filter2" value="category a" class="dropdown-item" />
+                    <input type="submit" name="filter2" value="category b" class="dropdown-item" />
+                    <input type="submit" name="filter2" value="category c" class="dropdown-item" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <form method="post">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Queue #</th>
+                    <th scope="col">Availablity</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Inquirer</th>
+                    <th scope="col" colspan="2">Question</th>
+                    <th scope="col">Acceptor</th>
+                    <th scope="col">Time Created</th>
+                </tr>
+            </thead>
+            <tbody id="content">
+                {% for row in tickets %}
+                <tr>
+                    <th scope="row">
+                        <input type="submit" value="{{ row[0] }}" name="tkt">
+                    </th>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td colspan="2">{{ row[3] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/helper.js') }}"></script>
+{% endblock %}

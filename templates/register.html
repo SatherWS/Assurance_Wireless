@@ -1,0 +1,66 @@
+{% extends "_layout.html" %}
+{% block title %}
+<title>Register</title>
+{% endblock %}
+{% block content %}
+<div class="row reg-style">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <h2 class="reg-head">Apply for Free Mobile Phone Services</h2>
+        <p>Please complete the form below.</p>
+        {% if error %}
+            <div class="gps-error">
+                <p>{{error}}</p>
+            </div>
+        {% endif %}
+        <form action="/register" method="post">
+            <input name="zipcode" type="number" placeholder="Enter your zip code" class="form-control su" required>
+            <input name="street" type="address" placeholder="Enter your street address" class="form-control su" required>
+            <div class="row">
+                <div class="col-md-8">
+                    <input name="city" type="text" placeholder="Enter your city" class="form-control su" required>
+                </div>
+                <div class="col-md-4">
+                    <select name="state" class="form-control su" required>
+                        <option value="AZ">Arizona</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NY">New York</option>
+                    </select>        
+                </div>    
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <input name="first" type="text" placeholder="First Name" class="form-control su" required>
+                </div>
+                <div class="col-md-6">
+                    <input name="last" type="text" placeholder="Last Name" class="form-control su" required>
+                </div>
+            </div>
+            <p class="su">Please enter your date of birth followed by the last four digits of your social security number.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="date" name="dob" placeholder="Date of birth" class="form-control su" required>
+                </div>
+                <div class="col-md-6">
+                    <input type="number" name="ssn" placeholder="Last 4 Digits of SSN" class="form-control su" required>
+                </div>
+            </div>
+            <input name="phone" type="number" placeholder="Phone number (optional)" class="form-control su">
+            <p class="su">Select you native language</p>
+            <select name="language" class="form-control su">
+                <option value="english">English</option>
+                <option value="spanish">Spanish</option>
+            </select>
+            <p class="su"><b>Note:</b> The below two fields will allow you to login and track the status of your application.</p>
+            <input name="email" type="email" placeholder="Email" class="form-control su" required>
+            <input name="password" type="password" placeholder="Password" class="form-control su" required>
+            
+            <!-- Submit form to server -->
+            <button type="submit" class="btn btn-primary su">Submit Application</button>
+
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+{% endblock %}

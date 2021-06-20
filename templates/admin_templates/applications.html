@@ -1,0 +1,105 @@
+{% extends "_layout.html" %}
+{% block head %}
+<title>Application Management Console</title>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid nav-spacing">
+    <div class="app-mngr-box">
+        <h4>Application Management Console</h4>
+        <p class="text-right">Current User: {{session['email']}}</p>
+    </div>
+    <form id="apps" action="{{ url_for('.process_apps') }}" method="POST">
+        <nav class="navbar navbar-dark bg-dark">
+            <!-- Container for Accept & Deny Buttons -->
+            <div class="form-inline">
+                <input type="submit" name="submit_btn" value="Accepted" style="display:none;" id="accept" />
+                <input type="submit" name="submit_btn" value="Denied" style="display:none;" id="deny" />
+                <button type="button" onclick="showAccepted()"
+                        data-toggle="modal" data-target="#myModal"
+                        class="btn btn-success mr-2">
+                    Accept
+                </button>
+
+                <button type="button" onclick="showDenied()"
+                        data-toggle="modal" data-target="#myModal"
+                        class="btn btn-danger">
+                    Deny
+                </button>
+            </div>
+
+            <!-- Search Controls -->
+            <div class="form-inline">
+                <input class="form-control mr-sm-2" type="search" name="zip" onkeyup="searchApps()"
+                       placeholder="Search Name" aria-label="Search" id="search">
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Ticket Options
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <input type="submit" name="filter" value="Show All" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Pending" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Accepted" class="dropdown-item" />
+                        <input type="submit" name="filter" value="Denied" class="dropdown-item" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th scope="col"><input type="checkbox" onclick="selectAll(this)"></th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Applicant Name</th>
+                    <th scope="col">Applicant Email</th>
+                    <th scope="col">Zip Code</th>
+                    <th scope="col">Submit Datetime</th>
+                </tr>
+            </thead>
+            <tbody id="content">
+                {% for row in apps %}
+                <tr name="process">
+                    <td>
+                        <input type="checkbox" name="selected" value="{{ row[4] }}">
+                    </td>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }} {{ row[3] }}</td>
+                    <td>{{ row[4] }}</td>
+                    <td>{{ row[5] }}</td>
+                    <td>{{ row[6] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <!-- Comment Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Applications to <span id="decision"></span></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" id="results">
+                        <div id="chosen"></div>
+                        <div class="choices">
+                            <select class="form-control" id="add-options" name="reason">
+                            </select>
+                        </div>
+                        <textarea name="notes" class="form-control mt-2" placeholder="Write additional notes here" rows="5"></textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <div id="modal-submit">
+                            <a onclick="processApps()" class="btn btn-light success">Confirm</a>
+                        </div>
+                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block js %}
+<script src="{{ url_for('static', filename='js/helper.js') }}"></script>
+{% endblock %}
